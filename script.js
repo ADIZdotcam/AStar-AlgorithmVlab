@@ -151,3 +151,205 @@ retakeButton.addEventListener("click", () => {
 });
 
 showQuestion();
+document.addEventListener('DOMContentLoaded', function () {
+    createGrid();
+});
+
+const rows = 7;
+const cols = 15;
+let grid = [];
+let openSet = [];
+let closedSet = [];
+let path = [];
+let start, goal;
+let stepIndex = 0;
+let pathFound = false;
+
+// Create grid
+function createGrid() {
+    const gridElement = document.getElementById("grid");
+    gridElement.innerHTML = "";
+    gridElement.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+
+    for (let i = 0; i < rows; i++) {
+        grid[i] = [];
+        for (let j = 0; j < cols; j++) {
+            let cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            cell.addEventListener("click", toggleWall);
+            gridElement.appendChild(cell);
+            grid[i][j] = { 
+                row: i, col: j, f: 0, g: 0, h: 0, 
+                wall: false, parent: null, element: cell 
+            };
+        }
+    }
+
+    start = grid[0][0];
+    goal = grid[rows - 1][cols - 1];
+    start.element.classList.add("start");
+    goal.element.classList.add("goal");
+}
+
+// Toggle walls on click
+function toggleWall(event) {
+    let row = event.target.dataset.row;
+    let col = event.target.dataset.col;
+    if ((row == 0 && col == 0) || (row == rows - 1 && col == cols - 1)) return;
+    let cell = grid[row][col];
+    cell.wall = !cell.wall;
+    cell.element.classList.toggle("wall");
+}
+
+// Euclidean Distance
+function heuristic(a, b) {
+    return Math.sqrt((a.row - b.row) ** 2 + (a.col - b.col) ** 2);
+}
+
+// Get Neighbors
+function getNeighbors(node) {
+    let neighbors = [];
+    let { row, col } = node;
+    let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+
+    for (let [dx, dy] of directions) {
+        let newRow = row + dx;
+        let newCol = col + dy;
+        if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+            neighbors.push(grid[newRow][newCol]);
+        }
+    }
+    return neighbors;
+}
+
+// A* Stepwise Execution
+function aStarStep() {
+    if (pathFound || openSet.length === 0) return;
+
+    openSet.sort((a, b) => a.f - b.f);
+    let current = openSet.shift();
+
+    if (current === goal) {
+        reconstructPath(current);
+        pathFound = true;
+        document.getElementById("nextStep").innerText = "Retake Practical";
+        return;
+    }
+
+    closedSet.push(current);
+    current.element.classList.add("closed-set");
+
+    let stepLog = `Checking node (${current.row}, ${current.col}):\n`;
+
+    let neighbors = getNeighbors(current);
+    for (let neighbor of neighbors) {
+        if (closedSet.includes(neighbor) || neighbor.wall) continue;
+
+        let tentativeG = current.g + 1;
+        if (!openSet.includes(neighbor)) {
+            openSet.push(neighbor);
+        } else if (tentativeG >= neighbor.g) {
+            continue;
+        }
+
+        neighbor.g = tentativeG;
+        neighbor.h = heuristic(neighbor, goal);
+        neighbor.f = neighbor.g + neighbor.h;
+        neighbor.parent = current;
+        neighbor.element.classList.add("open-set");
+        neighbor.element.innerText = Math.round(neighbor.f);
+
+        stepLog += ` → Neighbor (${neighbor.row}, ${neighbor.col}): g=${neighbor.g}, h=${neighbor.h.toFixed(2)}, f=${neighbor.f.toFixed(2)}\n`;
+    }
+
+    document.getElementById("stepDetails").innerText = stepLog;
+}
+
+// Reconstruct Path
+function reconstructPath(node) {
+    path = [];
+    while (node) {
+        path.push(node);
+        node = node.parent;
+    }
+    path.reverse();
+    drawPath();
+}
+
+// Draw Path
+function drawPath() {
+    for (let node of path) {
+        if (node !== start && node !== goal) {
+            node.element.classList.add("path");
+            node.element.innerText = "✔";
+        }
+    }
+    document.getElementById("stepDetails").innerText = "Shortest path found!";
+}
+
+// Start Search
+function startSearch() {
+    openSet = [start];
+    closedSet = [];
+    path = [];
+    pathFound = false;
+    grid.forEach(row => row.forEach(cell => {
+        cell.f = cell.g = cell.h = 0;
+        cell.parent = null;
+        cell.element.classList.remove("closed-set", "open-set", "path");
+        if (!cell.wall) cell.element.innerText = "";
+    }));
+}
+
+// Reset Practice Section for Retake
+function resetPracticeSection() {
+    // Reset A* related variables and state
+    //current = openSet.shift();
+    stepIndex = 0;
+    pathFound = false;
+    openSet = [];
+    closedSet = [];
+    path = [];
+    
+    // Reset the grid cells (remove any walls, paths, etc.)
+    grid.forEach(row => row.forEach(cell => {
+        cell.f = cell.g = cell.h = 0;
+        cell.parent = null;
+        cell.element.classList.remove("closed-set", "open-set", "path", "wall");
+        if (!cell.wall) cell.element.innerText = "";
+    }));
+    
+    // Re-add start and goal cells
+    start.element.classList.add("start");
+    goal.element.classList.add("goal");
+    
+    
+    // Reset the "Next Step" button visibility and text
+    nextStep.style.display = "block";  // Ensure "Next Step" is visible
+    nextStep.innerText = "Next Step"; // Reset text to "Next Step"
+    
+    // Reset the "Retake Practical" button visibility
+    retakeButton.style.display = "none";
+    // Restart the A* search
+    startSearch();
+
+    // Optionally, switch content back to practice section
+    switchContent('practice');
+}
+
+document.getElementById("nextStep").addEventListener("click", () => {
+    if (document.getElementById("nextStep").innerText === "Retake Practical") {
+        resetPracticeSection();
+        return;
+    }
+
+    if (stepIndex === 0) startSearch();
+    
+    aStarStep();
+    stepIndex++;
+});
+
+
+

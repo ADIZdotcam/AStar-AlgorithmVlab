@@ -477,13 +477,11 @@ input[type="radio"]:checked + label {
 .your-turn label,
 #arrayInput,
 #targetInput,
+
 .sbt {
   width: 100%;
   max-width: 350px;
-}
-
-.sbt {
-  margin-top: 20px;
+  margin: 20px auto; /* This centers the button */
   padding: 15px;
   font-size: 1.1rem;
   font-weight: bold;
@@ -493,7 +491,9 @@ input[type="radio"]:checked + label {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: block; /* Makes the button a block element */
 }
+
 
 .sbt:hover {
   background-color: #0056b3;
@@ -645,7 +645,7 @@ h4 {
 
 .codes button,
 #next-btn {
-  margin-top: 20px;
+  margin: 20px auto; /* This centers the button horizontally */
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -653,7 +653,9 @@ h4 {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  display: block; /* Makes the button a block element */
 }
+
 
 .codes button:hover,
 #next-btn:hover,
@@ -763,7 +765,7 @@ button:hover {
 /* Retake button styles */
 #retake-btn {
   display: none;
-  margin-top: 20px;
+  margin: 20px auto;
   padding: 10px 20px;
   background-color: #28a745;
   color: white;
@@ -905,4 +907,46 @@ a {
   #practice .stepsP li {
     width: 220px;
   }
+}
+/* Grid Layout */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(15, 30px);
+  gap: 2px;
+  margin: 20px auto;
+  width: fit-content;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+}
+
+.start { background-color: green; color: white; }
+.goal { background-color: red; color: white; }
+.wall { background-color: black; }
+.open-set { background-color: yellow; }
+.closed-set { background-color: lightgray; }
+.path { background-color: blue; color: white; }
+
+/* Execution Box - Fixed Size */
+#executionBox {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 100px; /* Fixed height */
+  background-color: #f9f9f9;
+  text-align: left;
+  font-size: 14px;
+  overflow-y: auto;
+  display: inline-block;
 }
