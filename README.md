@@ -8,7 +8,7 @@ Welcome to **A*PathfindingVlab**, a Virtual Labs project designed to explore the
 
 ## 🛠 Features
 
-- **A* Pathfinding Algorithm**: Uses a heuristic approach combined with graph search to find the shortest path from a start point to a goal.
+- ** A* Pathfinding Algorithm**: Uses a heuristic approach combined with graph search to find the shortest path from a start point to a goal.
 - **Heuristic Function**: Efficiently guides the search process by estimating the cost to reach the goal from a given point.
 - **Dynamic Grid**: Visualizes the pathfinding process on a grid with obstacles, showcasing how A* adapts to different environments.
 
