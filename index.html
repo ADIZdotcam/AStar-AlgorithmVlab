@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="V-Lab.....A* Algorithm.....shortest distance">
+    <meta name="description" content="V-Lab.....Search Algorithms....Linear Search and Binary Search">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A* Algorithm</title>
+    <title>A* PathFinding</title>
     <link rel="icon" href="images/vlab-logo.png" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet"
@@ -38,7 +38,7 @@
     </header>
 
     <div class="h1title">
-        <h1>A* Algorithm</h1>
+        <h1>A*  PathFinding</h1>
     </div>
 
     <div class="pageview">
@@ -97,8 +97,7 @@
                 </div>
                 <div class="content">
                     <p>
-                        The aim of this Virtual lab is to implement an adaptive search algorithm that automatically
-                        performs linear search for an unsorted list and binary search for sorted list.
+                        The aim of this Virtual Lab is to implement the A* pathfinding algorithm that dynamically finds the shortest path between two points in a city, combining heuristic and cost-based approaches to efficiently navigate through a weighted graph, similar to real-world navigation systems.
                     </p>
                 </div>
 
@@ -108,30 +107,19 @@
                     Theory
                 </div>
                 <div class="content">
-                    <p>
-                        The adaptive search algorithm combines the efficiency of binary search for sorted list
-                        and the simplicity of linear search for unsorted list. It determines the nature of the
-                        given sequence of elements by checking if it is sorted or unsorted. Based on the result, it
-                        applies the
-                        appropriate search algorithm. If the list is sorted, it performs binary search; otherwise,
-                        it resorts to linear search.</p>
-                    <p>
-                        Search algorithms, such as linear search and binary search, are fundamental concepts with
-                        various applications in computer science and real-world scenarios.<br> Its some applications
-                        include:
-                    </p>
-                    <ul class="stepsP">
-                        <li><strong>Database Systems:</strong> Search algorithms are widely used in database systems to
-                            efficiently retrieve information based on search queries.</li>
-                        <li><strong>Information Retrieval:</strong> Search algorithms power search engines, helping
-                            users find relevant information on the web.</li>
-                        <li><strong>Sorting and Searching in Libraries:</strong> These algorithms are used in libraries
-                            to organize and retrieve books efficiently.</li>
-                        <li><strong>Network Routing:</strong> In networking, search algorithms play a crucial role in
-                            determining optimal routes for data transmission.</li>
-                        <li><strong>Game Development:</strong> Search algorithms are utilized in games to find paths,
-                            search for objects, or make decisions based on game states.</li>
-                    </ul>
+                    <p>  
+                        The A* pathfinding algorithm is a widely used search algorithm that combines the strengths of Dijkstra's algorithm and Greedy Best-First Search. It uses a heuristic function to estimate the cost from a given node to the goal, alongside the actual cost from the start node to the current node, to prioritize paths that are most likely to lead to the shortest solution. This blend of cost-based and heuristic-driven exploration makes A* highly efficient in navigating complex graphs.  
+                        </p>  
+                        <p>  
+                        Pathfinding algorithms, such as A*, are fundamental concepts in computer science and have diverse applications in solving real-world problems.<br> Its some applications include:  
+                        </p>  
+                        <ul class="stepsP">  
+                            <li><strong>Navigation Systems:</strong> A* is commonly used in GPS navigation systems to calculate the shortest route between locations.</li>  
+                            <li><strong>Game Development:</strong> The algorithm helps game characters or objects find the optimal path through game levels or environments.</li>  
+                            <li><strong>Robotics:</strong> Robots use A* to navigate through physical spaces while avoiding obstacles.</li>  
+                            <li><strong>Network Routing:</strong> A* is employed in network protocols to find the shortest or most efficient data transmission paths.</li>  
+                            <li><strong>Urban Planning:</strong> A* assists in planning efficient routes for transportation and logistics in urban environments.</li>  
+                        </ul>  
 
                 </div>
             </div>
@@ -141,35 +129,38 @@
                     Procedure
                 </div>
                 <div class="content">
-                    <p>The procedure for implementing the adaptive search algorithm can be summarized as follows:</p>
-                    <ol class="steps-list">
-                        <li>Input the desired list.</li>
-                        <li>Take the target element to be searched in the input list from the user.</li>
-                        <li>Check if the list is sorted or unsorted:
-                            <ol type="i">
-                                <li>If the list is sorted, apply the binary search algorithm.</li>
-                                <li>If the list is unsorted, apply the linear search algorithm.</li>
-                            </ol>
-                        </li>
-                        <li>If the binary search algorithm is applied:
-                            <ol type="i">
-                                <li>Initialize the search range, which initially includes the entire sorted list.</li>
-                                <li>Divide the search range in half and compare the target element with the middle
-                                    element of the range.</li>
-                                <li>Adjust the search range iteratively by reducing it by half with each iteration until
-                                    the target element is found or the search range is empty.</li>
-                                <li>If the target element is found, return the index of the element. If the search range
-                                    is empty, conclude that the element is not present.</li>
-                            </ol>
-                        </li>
-                        <li>If the linear search algorithm is applied:
-                            <ol type="i">
-                                <li>Iterate sequentially in the unsorted list by comparing with the target element.</li>
-                                <li>If a match is found, return the index of the element. If the entire list is
-                                    traversed without finding a match, conclude that the element is not present.</li>
-                            </ol>
-                        </li>
-                    </ol>
+                    <p>The procedure for implementing the A* pathfinding algorithm can be summarized as follows:</p>  
+<ol class="steps-list">  
+    <li>Input the graph representation (nodes, edges, and weights) and the start and goal nodes.</li>  
+    <li>Initialize the following data structures:  
+        <ol type="i">  
+            <li>A priority queue to store nodes, prioritized by their total estimated cost (f = g + h).</li>  
+            <li>A dictionary to track the actual cost (g) of reaching each node from the start node.</li>  
+            <li>A heuristic function (h) that estimates the cost from any node to the goal.</li>  
+            <li>A dictionary to keep track of parent nodes for reconstructing the path.</li>  
+        </ol>  
+    </li>  
+    <li>Set the g-value of the start node to 0 and calculate its f-value using the heuristic function. Add the start node to the priority queue.</li>  
+    <li>While the priority queue is not empty:  
+        <ol type="i">  
+            <li>Dequeue the node with the lowest f-value from the priority queue.</li>  
+            <li>If the dequeued node is the goal node, terminate the search and reconstruct the path using the parent nodes.</li>  
+            <li>For each neighboring node of the current node:  
+                <ol type="a">  
+                    <li>Calculate the tentative g-value for the neighbor as the sum of the g-value of the current node and the edge cost.</li>  
+                    <li>If the tentative g-value is lower than the recorded g-value for the neighbor or the neighbor is not in the priority queue:</li>  
+                        <ol type="1">  
+                            <li>Update the g-value and calculate the f-value (f = g + h) for the neighbor.</li>  
+                            <li>Set the current node as the parent of the neighbor.</li>  
+                            <li>Add or update the neighbor in the priority queue with the new f-value.</li>  
+                        </ol>  
+                </ol>  
+            </li>  
+        </ol>  
+    </li>  
+    <li>If the priority queue becomes empty and the goal node is not reached, conclude that no path exists.</li>  
+    <li>Output the reconstructed shortest path and its total cost if a path is found.</li>  
+</ol>  
                 </div>
             </div>
 
