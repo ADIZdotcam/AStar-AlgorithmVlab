@@ -226,8 +226,15 @@ function getNeighbors(node) {
 
 // A* Stepwise Execution
 function aStarStep() {
-    if (pathFound || openSet.length === 0) return;
-
+    if (pathFound || openSet.length === 0) {
+        if (!pathFound) {
+            // If no path is found, show the message and retake button
+            document.getElementById("stepDetails").innerText = "Can't find path!";
+            document.getElementById("nextStep").innerText = "Retake Practical";
+            document.getElementById("retakeButton").style.display = "block";  // Show Retake button
+        }
+        return;
+    }
     openSet.sort((a, b) => a.f - b.f);
     let current = openSet.shift();
 
