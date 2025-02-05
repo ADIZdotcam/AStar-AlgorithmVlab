@@ -359,18 +359,20 @@ document.getElementById("nextStep").addEventListener("click", () => {
     stepIndex++;
 });
 
-function copyCode(elementId) {
-    var codeBlock = document.getElementById(elementId);
-    var code = codeBlock.querySelector('code').innerText;
+function toggleVideo() {
+    const video = document.getElementById("mp4Video");
+    const playPauseBtn = document.getElementById("playPauseBtn");
 
-    navigator.clipboard.writeText(code).then(function () {
-        var copyButton = codeBlock.querySelector('.copy-button');
-        copyButton.textContent = 'Copied!';
-        setTimeout(function () {
-            copyButton.textContent = 'Copy';
-        }, 2000);
-    }, function (err) {
-        console.error('Could not copy text: ', err);
-    });
+    // Check if the video is playing or paused
+    if (video.paused) {
+        // Play the video
+        video.play();
+        playPauseBtn.textContent = "Pause Video";  // Change button text to 'Pause'
+    } else {
+        // Pause the video
+        video.pause();
+        playPauseBtn.textContent = "Play Video";  // Change button text to 'Play'
+    }
 }
+
 

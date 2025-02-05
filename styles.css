@@ -151,6 +151,7 @@ header .nav-menu a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/*choti screen*/
 @media screen and (max-width: 840px) {
   .header {
     flex-direction: row;
@@ -280,6 +281,8 @@ header .nav-menu a:hover {
   .tools-list li span {
     font-size: 14px;
   }
+
+  
 }
 
 @media (min-width: 840px) {
@@ -615,7 +618,7 @@ h4 {
 
 #question {
   font-size: 18px;
-  margin-left: 5px;
+  margin-left: 10px;
   margin-top: 20px;
 }
 
@@ -1014,3 +1017,50 @@ a {
   font-size: 12px;
   white-space: pre-wrap;
 }
+
+/*video map section*/
+#practice2 {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #e9f7fa;
+  border: 1px solid #b2ebf2;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.video-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.video-container video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Styling for the button */
+.control-buttons {
+  margin-top: 20px;
+}
+
+.control-buttons button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.control-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.control-buttons button:active {
+  background-color: #004085;
+}
+
