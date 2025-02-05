@@ -954,3 +954,63 @@ a {
 .information {
   text-align: center;
 }
+.copy-button {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.copy-button:hover {
+  background-color: #1a2230;
+}
+
+.choices {
+  margin-top: 30px;
+}
+
+#next-btn {
+  margin-top: 30px;
+}
+.code-block {
+  position: relative;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.code-content {
+  position: relative;
+  min-width: 1080px;
+}
+
+.copy-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #464646;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.copy-button.copied {
+  background-color: #171717;
+  color: white;
+}
+
+.code-content:hover .copy-button {
+  display: block;
+}
+
+.copy-button {
+  display: none;
+}
+
+.language-python {
+  padding: 20px;
+  margin: 0;
+  font-size: 12px;
+  white-space: pre-wrap;
+}

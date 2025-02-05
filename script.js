@@ -359,5 +359,18 @@ document.getElementById("nextStep").addEventListener("click", () => {
     stepIndex++;
 });
 
+function copyCode(elementId) {
+    var codeBlock = document.getElementById(elementId);
+    var code = codeBlock.querySelector('code').innerText;
 
+    navigator.clipboard.writeText(code).then(function () {
+        var copyButton = codeBlock.querySelector('.copy-button');
+        copyButton.textContent = 'Copied!';
+        setTimeout(function () {
+            copyButton.textContent = 'Copy';
+        }, 2000);
+    }, function (err) {
+        console.error('Could not copy text: ', err);
+    });
+}
 

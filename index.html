@@ -167,192 +167,81 @@
 
             <div class="container" id="code">
                 <div class="title">Code</div>
-                <p> Example programs</p>
-                <div class="switch-container">
-                    <input class="togswt" type="radio" id="cppRadio" name="codeSwitch" checked>
-                    <label for="cppRadio" onclick="toggleCode('cpp')">C++</label>
-
-                    <input class="togswt" type="radio" id="pythonRadio" name="codeSwitch">
-                    <label for="pythonRadio" onclick="toggleCode('python')">Python</label>
-                </div>
-
+                <p>Example program</p>
+            
                 <div class="code-blocks">
-                    <div id="cppCode" class="code-block active">
-                        <div class="code-content">
-                            <pre>
-<code class="language-cpp">// C++
-#include < iostream >
-using namespace std;
- 
-int linearSearch(const int* arr, int size, int target) {
-    for (int i = 0; i < size; ++i) {
-        if (arr[i] == target)
-            return i;  // Found the target
-    }
-    return -1;  // Target not found
-}
-int binarySearch(const int* arr, int size, int target) {
-    int left = 0;
-    int right = size - 1;
- 
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
- 
-        if (arr[mid] == target)
-            return mid;  // Found the target
- 
-        if (arr[mid] < target)
-            left = mid + 1;
-        else
-            right = mid - 1;
-    }
- 
-    return -1;  // Target not found
-}
-struct Search{
-    /*
-    Defines a structure named 'Search' that is used to represent search results or items.
-    The 'Search' structure has two members:
- 
-    'index' (integer): Represents the index or position of a search result or item.
-    'sorted' (integer): Indicates whether the search result or item is sorted.
-    This structure can be utilized to organize and store information
-        related to search operations, such as maintaining the index and sorted
-        status of search results in a list.
-    */
-        int index;
-        int sorted;
-    };
-Search adaptiveSearch(const int* arr, int size, int target){
- 
-    Search searchResult;
-    searchResult.sorted =0;
-    searchResult.index =-1;
-    // Check if the list is sorted
-    bool isSorted = true;
-    for (int i = 1; i < size; ++i) {
-        if (arr[i] < arr[i - 1]) {
-            isSorted = false;
-            break;
-        }
-    }
-    
-    if (isSorted){
-        searchResult.index =  binarySearch(arr, size, target);
-        searchResult.sorted = 1;
-        return  searchResult;}
-    else{
-        searchResult.index =  linearSearch(arr, size, target);
-        searchResult.sorted = 0;
-        return  searchResult;}
-}
-int main() {
-    int sizeA,target,value;//sizeB,
-    cin>>sizeA;//sizeB;
-    int list[sizeA] ;
-    cout<<"Enter your list:\n";  
-    for (int i = 0;i< sizeA;i++){ 
-        cin>>value;
-        list[i]=value; } 
-        cout<<"Enter the target: ";    cin>>target;
- 
-    Search result = adaptiveSearch(list, sizeof(list) / sizeof(list[0]), target);
- 
- 
-    if(result.sorted){
-    if (result.index != -1){
-        cout << "Binary search: Found at index " << result.index << endl;}
-    else{
-        cout << "Binary search: Not found" << endl;}
-    }
-    else{
-        if (result.index != -1){
-        cout << "Linear search: Found at index " << result.index << endl;}
-    else{
-        cout << "Linear search: Not found" << endl;}
-    }
-}
-                    </code></pre>
-                            <button class="copy-button" onclick="copyCode('cppCode')">Copy</button>
-                        </div>
-                    </div>
-                    <div id="pyCode" class="code-block" style="display: none;">
+                    <!-- Python code block -->
+                    <div id="pyCode" class="code-block active">
                         <div class="code-content">
                             <pre><code class="language-python"># Python
-def linear_search(arr, target):
-    """
-    Performs linear search on the given list to find the target element.
- 
-    Args:
-        arr (list): The list to be searched.
-        target: The element to be found in the list.
- 
-    Returns:
-        int: The index of the target element if found, -1 otherwise.
-    """
-    for i in range(len(arr)):
-        if arr[i] == target:
-            return i  # Target element found, return the index
-    return -1  # Target element not found
- 
- 
-def binary_search(arr, target):
-    """
-    Performs a binary search on the given sorted list to find the target element.
-    Args:
-        arr (list): The sorted list to be searched.
-        target: The element to be found in the list.
-    Returns:
-        int: The index of the target element if found, -1 otherwise.
-    """
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
- 
-def main():
-    # Take input from the user
-    arr = input("Enter the list (space-separated integers): ").split()
-    arr = [int(x) for x in arr]
-    target = int(input("Enter the target element: "))
-
-    # Determine if the list is sorted
-    is_sorted = sorted(arr) == arr
-
-    # Perform the appropriate search
-    if is_sorted:
-        print("Sorted list given.\nPerforming Binary Search.")
-        index = binary_search(arr, target)
-        if index == -1:
-            print(f"The target {target} is not found in the sorted list.")
-        else:
-            print(f"The target {target} is found at index {index} in the sorted list.")
-    else:
-        print("Unsorted list found.\nPerforming Linear Search.")
-        index = linear_search(arr, target)
-        if index == -1:
-            print(f"The target {target} is not found in the unsorted list.")
-        else:
-            print(f"The target {target} is found at index {index} in the unsorted list.")
-
-if __name__ == "__main__":
-    main()
-        
-                    </code></pre>
+            def linear_search(arr, target):
+                """
+                Performs linear search on the given list to find the target element.
+             
+                Args:
+                    arr (list): The list to be searched.
+                    target: The element to be found in the list.
+             
+                Returns:
+                    int: The index of the target element if found, -1 otherwise.
+                """
+                for i in range(len(arr)):
+                    if arr[i] == target:
+                        return i  # Target element found, return the index
+                return -1  # Target element not found
+             
+            def binary_search(arr, target):
+                """
+                Performs a binary search on the given sorted list to find the target element.
+                Args:
+                    arr (list): The sorted list to be searched.
+                    target: The element to be found in the list.
+                Returns:
+                    int: The index of the target element if found, -1 otherwise.
+                """
+                left, right = 0, len(arr) - 1
+                while left <= right:
+                    mid = (left + right) // 2
+                    if arr[mid] == target:
+                        return mid
+                    elif arr[mid] < target:
+                        left = mid + 1
+                    else:
+                        right = mid - 1
+                return -1
+            
+            def main():
+                # Take input from the user
+                arr = input("Enter the list (space-separated integers): ").split()
+                arr = [int(x) for x in arr]
+                target = int(input("Enter the target element: "))
+            
+                # Determine if the list is sorted
+                is_sorted = sorted(arr) == arr
+            
+                # Perform the appropriate search
+                if is_sorted:
+                    print("Sorted list given.\nPerforming Binary Search.")
+                    index = binary_search(arr, target)
+                    if index == -1:
+                        print(f"The target {target} is not found in the sorted list.")
+                    else:
+                        print(f"The target {target} is found at index {index} in the sorted list.")
+                else:
+                    print("Unsorted list found.\nPerforming Linear Search.")
+                    index = linear_search(arr, target)
+                    if index == -1:
+                        print(f"The target {target} is not found in the unsorted list.")
+                    else:
+                        print(f"The target {target} is found at index {index} in the unsorted list.")
+            
+            if __name__ == "__main__":
+                main()</code></pre>
                             <button class="copy-button" onclick="copyCode('pyCode')">Copy</button>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
+            </div>            
 
 
             <div class="container" id="practice">
