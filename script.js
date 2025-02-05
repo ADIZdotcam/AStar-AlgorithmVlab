@@ -231,7 +231,7 @@ function aStarStep() {
             // If no path is found, show the message and retake button
             document.getElementById("stepDetails").innerText = "Can't find path!";
             document.getElementById("nextStep").innerText = "Retake Practical";
-            document.getElementById("retakeButton").style.display = "block";  // Show Retake button
+            //document.getElementById("retakeButton").style.display = "block";  // Show Retake button
         }
         return;
     }
@@ -320,13 +320,14 @@ function resetPracticeSection() {
     closedSet = [];
     path = [];
     
-    // Reset the grid cells (remove any walls, paths, etc.)
     grid.forEach(row => row.forEach(cell => {
         cell.f = cell.g = cell.h = 0;
         cell.parent = null;
+        cell.wall = false;  // Reset the wall status explicitly
         cell.element.classList.remove("closed-set", "open-set", "path", "wall");
-        if (!cell.wall) cell.element.innerText = "";
+        cell.element.innerText = "";
     }));
+    
     
     // Re-add start and goal cells
     start.element.classList.add("start");
