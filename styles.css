@@ -955,6 +955,7 @@ a {
 }
 
 .information {
+  padding-top: 10px;
   text-align: center;
 }
 .copy-button {
@@ -1034,8 +1035,8 @@ a {
 }
 
 .video-container video {
-  max-width: 60%;
-  height: 400px;
+  max-width: 100%;
+  height: 481px;
   border-radius: 8px;
 }
 
