@@ -950,3 +950,7 @@ a {
   overflow-y: auto;
   display: inline-block;
 }
+
+.information {
+  text-align: center;
+}
