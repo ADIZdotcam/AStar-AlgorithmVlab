@@ -299,13 +299,23 @@
                 <div class="title">
                     Result
                 </div>
-                <div class="content">
-                    <p>
-                        The adaptive search algorithm will apply appropriate searching algorithm (linear/binary) as per
-                        the ordering of the elements in the input list. It will return the index of the target element
-                        if it is found in the list or -1 if the element is not present.
-                    </p>
-                </div>
+                
+        <div class="description">
+            <p>The A* pathfinding algorithm will apply an appropriate heuristic-based search method to find the shortest path from the start node to the goal node. It will consider both the actual cost to reach a node (g) and the estimated cost to the goal (h), using the formula <strong>f = g + h</strong> to prioritize node exploration. The algorithm will return the path of nodes if a solution is found, or indicate failure (no path) if no path exists.</p>
+        </div>
+
+        <div class="key-points">
+            <h3>Key Points:</h3>
+            <p><strong>g</strong>: The actual cost from the start node to the current node.</p>
+            <p><strong>h</strong>: The heuristic estimate from the current node to the goal.</p>
+            <p><strong>f</strong>: The total estimated cost to reach the goal (sum of g and h).</p>
+        </div>
+
+        <div class="output">
+            <h3>Result:</h3>
+            <p>The algorithm will return the shortest path from the start node to the goal node if one exists.</p>
+            <p>If no path exists, it will return failure (typically represented as <strong>null</strong> or <strong>-1</strong>).</p>
+        </div>
             </div>
             <!-- Quiz Section -->
             <div class="container centered-content" id="quiz">
