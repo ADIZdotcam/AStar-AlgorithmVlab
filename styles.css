@@ -1065,3 +1065,46 @@ a {
   background-color: #004085;
 }
 
+.priority-queue { background: #e8f4ff; padding: 10px; border-left: 4px solid #007bff; border-radius: 4px; margin-bottom: 20px; }
+.step { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #28a745; border-radius: 4px; }
+.step h3 { margin-top: 0; }
+.optimal { background: #d4edda; border-left: 4px solid #155724; padding: 15px; border-radius: 4px; }
+
+.graph-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#graphCanvas {
+  border: 2px solid black;
+  background-color: white;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #007BFF;
+  color: white;
+}

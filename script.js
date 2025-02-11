@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    const searchButton = document.getElementById('searchbt');
-    searchButton.addEventListener('click', performSearch);
+   
 
 });
 
@@ -224,20 +223,21 @@ function getNeighbors(node) {
     return neighbors;
 }
 
-// A* Stepwise Execution
 function aStarStep() {
     if (pathFound || openSet.length === 0) {
         if (!pathFound) {
-            // If no path is found, show the message and retake button
             document.getElementById("stepDetails").innerText = "Can't find path!";
             document.getElementById("nextStep").innerText = "Retake Practical";
-            //document.getElementById("retakeButton").style.display = "block";  // Show Retake button
+            document.getElementById("retakeButton").style.display = "block"; // Show Retake button
         }
         return;
     }
-    openSet.sort((a, b) => a.f - b.f);
-    let current = openSet.shift();
 
+    // Sort openSet by f-cost (can be replaced with a priority queue for efficiency)
+    openSet.sort((a, b) => a.f - b.f);
+    let current = openSet.shift(); // Remove node with lowest f-cost
+
+    // If goal is reached, reconstruct the path
     if (current === goal) {
         reconstructPath(current);
         pathFound = true;
@@ -245,34 +245,43 @@ function aStarStep() {
         return;
     }
 
+    // Move current node to closed set
     closedSet.push(current);
     current.element.classList.add("closed-set");
 
+    // Logging for debugging
     let stepLog = `Checking node (${current.row}, ${current.col}):\n`;
 
+    // Get and evaluate neighbors
     let neighbors = getNeighbors(current);
     for (let neighbor of neighbors) {
-        if (closedSet.includes(neighbor) || neighbor.wall) continue;
+        if (closedSet.includes(neighbor) || neighbor.wall) continue; // Skip closed/wall nodes
 
-        let tentativeG = current.g + 1;
+        let tentativeG = current.g + 1; // Assuming uniform movement cost
         if (!openSet.includes(neighbor)) {
-            openSet.push(neighbor);
+            openSet.push(neighbor); // Add to openSet if not already present
         } else if (tentativeG >= neighbor.g) {
-            continue;
+            continue; // Skip if no improvement
         }
 
+        // Update neighbor values
         neighbor.g = tentativeG;
         neighbor.h = heuristic(neighbor, goal);
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.parent = current;
+
+        // Update visualization
         neighbor.element.classList.add("open-set");
         neighbor.element.innerText = Math.round(neighbor.f);
 
+        // Log details
         stepLog += ` → Neighbor (${neighbor.row}, ${neighbor.col}): g=${neighbor.g}, h=${neighbor.h.toFixed(2)}, f=${neighbor.f.toFixed(2)}\n`;
     }
 
+    // Display step details
     document.getElementById("stepDetails").innerText = stepLog;
 }
+
 
 // Reconstruct Path
 function reconstructPath(node) {
@@ -375,5 +384,22 @@ function toggleVideo() {
     }
 }
 
+function copyCode(elementId) {
+    const codeBlock = document.getElementById(elementId).textContent;
+    navigator.clipboard.writeText(codeBlock).then(() => {
+        let button = document.querySelector(".copy-button");
+        button.textContent = "Copied!";
+        button.style.backgroundColor = "#4CAF50"; // Green color
+
+        setTimeout(() => {
+            button.textContent = "Copy";
+            button.style.backgroundColor = ""; // Reset to default
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy code: ", err);
+    });
+}
 
 
+
+//practice 2 nodes
