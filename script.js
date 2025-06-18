@@ -404,8 +404,8 @@ function copyCode(elementId) {
 
 const canvasElem = document.getElementById("graphCanvas");
 const canvasCtx = canvasElem.getContext("2d");
-canvasElem.width = 200;
-canvasElem.height = 200;
+canvasElem.width = 300;
+canvasElem.height = 300;
 
 const tableBody = document.getElementById("info-table").querySelector("tbody");
 const nextButton2 = document.getElementById("next");
