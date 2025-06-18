@@ -1,0 +1,26 @@
+##LINE 572
+<div class="container" id="practice1">
+        <div class="title">
+            <h2>Grid Based Implementation</h2>
+        </div>
+    
+        <!-- Grid Diagram -->
+        <div id="grid"></div>
+        <div class="information">
+            <h4>You can click the blocks to change them into walls and create a maze.</h4>
+        </div>
+        <!-- Execution Box -->
+        <div id="executionBox">
+            <h3>Execution Step:</h3>
+            <p id="stepDetails">Click 'Next Step' to begin.</p>
+        </div>
+    
+        <!-- Next Step Button -->
+        <button class="sbt" id="nextStep">Next Step</button>
+        <div class="information">
+            <h4>Works best on bigger screens.</h4>
+        </div>
+    </div>            
+
+
+

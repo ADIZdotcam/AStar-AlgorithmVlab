@@ -801,6 +801,19 @@ a {
   display: block;
 }
 
+@media (max-width: 600px) {
+  .image-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
 /* Adjustments */
 @media screen and (max-width: 420px) {
   .container {
@@ -865,7 +878,6 @@ a {
 /* Grid Layout */
 #grid {
   display: grid;
-  grid-template-columns: repeat(15, 30px);
   gap: 2px;
   margin: 20px auto;
   width: fit-content;
@@ -910,6 +922,19 @@ a {
   background-color: blue;
   color: white;
 }
+
+#practice1 {
+  margin-top: 20px;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
+  padding: 20px;
+  background-color: #e9f7fa;
+  border: 1px solid #b2ebf2;
+  border-radius: 8px;
+  text-align: center;
+}
+
 
 /* Execution Box - Fixed Size */
 #executionBox {
@@ -985,6 +1010,9 @@ a {
 /*video map section*/
 #practice2 {
   margin-top: 20px;
+  margin-left: 0%;
+  margin-right: 0%;
+  margin-bottom: 0%;
   padding: 20px;
   background-color: #e9f7fa;
   border: 1px solid #b2ebf2;
