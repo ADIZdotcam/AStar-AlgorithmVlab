@@ -568,7 +568,7 @@ function runAStarStep() {
     const currentNode = openQueue.shift();
     visitedQueue.push(currentNode.id);
 
-    currentNarration = `Step ${visitedQueue.length}: Choosing node ${currentNode.id} (f=${currentNode.f}) from the open set.<br><br>`;
+    currentNarration = `${currentNode.id} (f=${currentNode.f}) Node choosed from the open set.<br><br>`;
 
     // Check if goal is reached
     if (currentNode.id === goalPoint) {
