@@ -402,16 +402,16 @@ function copyCode(elementId) {
 
 
 
-//practice 2 nodes
 const canvasElem = document.getElementById("graphCanvas");
 const canvasCtx = canvasElem.getContext("2d");
-canvasElem.width = 300;
+canvasElem.width = 200;
 canvasElem.height = 300;
 
 const tableBody = document.getElementById("info-table").querySelector("tbody");
 const nextButton2 = document.getElementById("next");
 const backButton = document.getElementById("back");
 const resetButton = document.getElementById("reset");
+const narrationDisplay = document.getElementById("narration-display"); // New element for narration
 
 const graphNodes = {
     A: { x: 30, y: 65 },
@@ -436,15 +436,56 @@ const graphEdges = [
 const startPoint = "A";
 const goalPoint = "G";
 
+const maxDistance = 455; // Max possible Manhattan distance in your graph roughly
+
 const estimateHeuristic = (nodeId, goalId) => {
     const dx = Math.abs(graphNodes[nodeId].x - graphNodes[goalId].x);
     const dy = Math.abs(graphNodes[nodeId].y - graphNodes[goalId].y);
-    return dx + dy;
+    const raw = dx + dy;
+    return Math.round((raw / maxDistance) * 9); // Scaled between 0-9
 };
 
-function renderGraph(activeQueue, exploredNodes) {
+let openQueue = [];
+let visitedQueue = [];
+let visitedTracker = {};
+let stepHistory = [];
+let goalReached = false;
+let currentNarration = ""; // To store the narration for the current step
+
+function initializeAStar() {
+    goalReached = false;
+    openQueue = [{
+        id: startPoint,
+        g: 0,
+        h: estimateHeuristic(startPoint, goalPoint),
+        f: estimateHeuristic(startPoint, goalPoint),
+        from: null
+    }];
+    visitedQueue = [];
+    visitedTracker = {
+        [startPoint]: {
+            g: 0,
+            h: estimateHeuristic(startPoint, goalPoint),
+            f: estimateHeuristic(startPoint, goalPoint),
+            from: "-"
+        }
+    };
+    stepHistory = [];
+    currentNarration = `Starting A* search from ${startPoint} to ${goalPoint}.`;
+    // Store initial state
+    stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
+    
+    updateTableDisplay();
+    renderGraph(openQueue, visitedQueue, null);
+    showQueueInfo();
+    updateNarrationDisplay(); // Display initial narration
+    updateButtonStates();
+}
+
+function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
     canvasCtx.clearRect(0, 0, canvasElem.width, canvasElem.height);
 
+    // Draw edges
     graphEdges.forEach(([src, dst, cost]) => {
         const { x: sx, y: sy } = graphNodes[src];
         const { x: dx, y: dy } = graphNodes[dst];
@@ -470,14 +511,15 @@ function renderGraph(activeQueue, exploredNodes) {
         canvasCtx.fillText(cost, textX, textY);
     });
 
+    // Draw nodes
     Object.keys(graphNodes).forEach(nodeId => {
         canvasCtx.beginPath();
         canvasCtx.arc(graphNodes[nodeId].x, graphNodes[nodeId].y, 20, 0, 2 * Math.PI);
 
         if (nodeId === startPoint) canvasCtx.fillStyle = "green";
         else if (nodeId === goalPoint) canvasCtx.fillStyle = "cyan";
-        else if (exploredNodes.includes(nodeId)) canvasCtx.fillStyle = "red";
-        else if (activeQueue.map(n => n.id).includes(nodeId)) canvasCtx.fillStyle = "lightgreen";
+        else if (currentVisitedQueue.includes(nodeId)) canvasCtx.fillStyle = "red";
+        else if (currentOpenQueue.some(n => n.id === nodeId)) canvasCtx.fillStyle = "lightgreen";
         else canvasCtx.fillStyle = "lightblue";
 
         canvasCtx.fill();
@@ -488,130 +530,187 @@ function renderGraph(activeQueue, exploredNodes) {
         canvasCtx.font = "16px Arial";
         canvasCtx.fillText(nodeId, graphNodes[nodeId].x - 5, graphNodes[nodeId].y + 5);
     });
+
+    // Draw final path if available
+    if (finalPath) {
+        canvasCtx.strokeStyle = "purple";
+        canvasCtx.lineWidth = 4;
+        for (let i = 0; i < finalPath.length - 1; i++) {
+            const srcNode = finalPath[i];
+            const dstNode = finalPath[i + 1];
+            const { x: sx, y: sy } = graphNodes[srcNode];
+            const { x: dx, y: dy } = graphNodes[dstNode];
+
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(sx, sy);
+            canvasCtx.lineTo(dx, dy);
+            canvasCtx.stroke();
+        }
+    }
 }
 
-let openQueue = [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 0, from: null }];
-let visitedQueue = [];
-let stepHistory = [];
-let visitedTracker = { [startPoint]: { g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" } };
-
 function runAStarStep() {
-    if (openQueue.length === 0) return;
-
-    openQueue.sort((a, b) => a.f - b.f);
-    const currentNode = openQueue.shift();
-    visitedQueue.push(currentNode.id);
-    stepHistory.push([...visitedQueue]);
-
-    if (visitedQueue.includes(goalPoint)) {
-        renderGraph(openQueue, visitedQueue);
-        highlightShortestPath();
+    if (goalReached) {
+        currentNarration = "Goal already reached. Please reset to run the algorithm again.";
+        updateNarrationDisplay();
+        return;
+    }
+    if (openQueue.length === 0) {
+        currentNarration = "Open set is empty. No path found to the goal.";
+        updateNarrationDisplay();
+        updateButtonStates();
         return;
     }
 
+    // Sort by f-score (lowest first)
+    openQueue.sort((a, b) => a.f - b.f);
+
+    const currentNode = openQueue.shift();
+    visitedQueue.push(currentNode.id);
+
+    currentNarration = `Step ${visitedQueue.length}: Choosing node ${currentNode.id} (f=${currentNode.f}) from the open set.<br><br>`;
+
+    // Check if goal is reached
+    if (currentNode.id === goalPoint) {
+        goalReached = true;
+        currentNarration += `Goal **${goalPoint}** reached! Calculating the shortest path.`;
+        updateTableDisplay();
+        const path = reconstructPath(currentNode.id);
+        renderGraph(openQueue, visitedQueue, path);
+        showQueueInfo();
+        updateNarationDisplay();
+        updateButtonStates();
+        return;
+    }
+
+    currentNarration += `Exploring neighbors of ${currentNode.id}: `;
+    let neighborsProcessed = [];
+
+    // Explore neighbors
     graphEdges.forEach(([src, dst, weight]) => {
         if (src !== currentNode.id) return;
-        if (visitedQueue.includes(dst)) return;
 
-        const gScore = currentNode.g + weight;
+        // Skip if neighbor is already in the closed set
+        if (visitedQueue.includes(dst)) {
+            neighborsProcessed.push(`**${dst}** (already in closed set)`);
+            return;
+        }
+
+        const tentative_gScore = currentNode.g + weight;
         const hScore = estimateHeuristic(dst, goalPoint);
-        const fScore = gScore + hScore;
-        const existingNode = openQueue.find(n => n.id === dst);
+        const tentative_fScore = tentative_gScore + hScore;
 
-        if (!existingNode || gScore < existingNode.g) {
-            openQueue.push({ id: dst, g: gScore, h: hScore, f: fScore, from: currentNode.id });
-            if (!visitedTracker[dst] || gScore < visitedTracker[dst].g) {
-                visitedTracker[dst] = { g: gScore, h: hScore, f: fScore, from: currentNode.id };
-            }
+        const existingNodeInOpen = openQueue.find(n => n.id === dst);
+
+        if (!existingNodeInOpen) {
+            // Node not in open set, add it
+            openQueue.push({ id: dst, g: tentative_gScore, h: hScore, f: tentative_fScore, from: currentNode.id });
+            visitedTracker[dst] = { g: tentative_gScore, h: hScore, f: tentative_fScore, from: currentNode.id };
+            neighborsProcessed.push(`Added **${dst}** (g=${tentative_gScore}, h=${hScore}, f=${tentative_fScore}) to open set.`);
+        } else if (tentative_gScore < existingNodeInOpen.g) {
+            // Node in open set, but new path is better (lower g-score)
+            existingNodeInOpen.g = tentative_gScore;
+            existingNodeInOpen.f = tentative_fScore;
+            existingNodeInOpen.from = currentNode.id;
+            visitedTracker[dst] = { g: tentative_gScore, h: hScore, f: tentative_fScore, from: currentNode.id };
+            neighborsProcessed.push(`Updated **${dst}**'s path (new g=${tentative_gScore}, f=${tentative_fScore}).`);
+            // Re-sort openQueue because f-score changed for an existing element
+            openQueue.sort((a, b) => a.f - b.f);
+        } else {
+            neighborsProcessed.push(`**${dst}** (existing path is better or equal).`);
         }
     });
+    currentNarration += neighborsProcessed.join('; ');
+
+    // Store the state before rendering for the back button
+    stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
 
     updateTableDisplay();
-    renderGraph(openQueue, visitedQueue);
+    renderGraph(openQueue, visitedQueue, null);
     showQueueInfo();
+    updateNarrationDisplay(); // Display narration for this step
+    updateButtonStates();
 }
 
 function updateTableDisplay() {
     tableBody.innerHTML = "";
-    Object.entries(visitedTracker).forEach(([node, { g, h, f, from }]) => {
+    const sortedNodes = Object.keys(visitedTracker).sort();
+
+    sortedNodes.forEach(nodeId => {
+        const { g, h, f, from } = visitedTracker[nodeId];
         const row = document.createElement("tr");
-        row.innerHTML = `<td>${node}</td><td>${g}</td><td>${h}</td><td>${f}</td><td>${from || "-"}</td>`;
+        row.innerHTML = `<td>${nodeId}</td><td>${g}</td><td>${h}</td><td>${f}</td><td>${from || "-"}</td>`;
         tableBody.appendChild(row);
     });
 }
 
+function reconstructPath(currentNodeId) {
+    const path = [];
+    let current = currentNodeId;
+    while (current !== null && visitedTracker[current]) {
+        path.unshift(current);
+        current = visitedTracker[current].from;
+        if (current === "-") current = null;
+    }
+    return path;
+}
+
 nextButton2.addEventListener("click", () => {
     runAStarStep();
-    showQueueInfo();
 });
 
 backButton.addEventListener("click", () => {
-    if (stepHistory.length === 0 || visitedQueue.length === 0) return;
+    if (stepHistory.length <= 1) {
+        console.log("Cannot go back further.");
+        return;
+    }
 
-    const removedNode = visitedQueue.pop();
+    // Pop the current state, then get the previous state
     stepHistory.pop();
+    const prevState = stepHistory[stepHistory.length - 1];
 
-    Object.keys(visitedTracker).forEach(node => {
-        if (visitedTracker[node].from === removedNode) {
-            delete visitedTracker[node];
-        }
-    });
-
-    delete visitedTracker[removedNode];
-
-    openQueue = stepHistory.length > 0
-        ? stepHistory[stepHistory.length - 1].map(n => ({
-            id: n,
-            ...visitedTracker[n]
-        }))
-        : [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" }];
+    // Restore the state
+    openQueue = JSON.parse(JSON.stringify(prevState.openQueue));
+    visitedQueue = JSON.parse(JSON.stringify(prevState.visitedQueue));
+    visitedTracker = JSON.parse(JSON.stringify(prevState.visitedTracker));
+    currentNarration = prevState.narration; // Restore narration
+    goalReached = false;
 
     updateTableDisplay();
-    renderGraph(openQueue, visitedQueue);
+    renderGraph(openQueue, visitedQueue, null);
     showQueueInfo();
+    updateNarrationDisplay(); // Update narration display after going back
+    updateButtonStates();
 });
 
 resetButton.addEventListener("click", () => {
-    openQueue = [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 0, from: null }];
-    visitedQueue = [];
-    stepHistory = [];
-    visitedTracker = { [startPoint]: { g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" } };
     tableBody.innerHTML = "";
-    renderGraph([], []);
-
     const statusDiv = document.getElementById("open-closed-display");
     statusDiv.innerHTML = "";
+    initializeAStar();
+    updateButtonStates();
 });
-
-function highlightShortestPath() {
-    let current = goalPoint;
-    canvasCtx.strokeStyle = "purple";
-    canvasCtx.lineWidth = 4;
-
-    while (current && visitedTracker[current]?.from !== null) {
-        const from = visitedTracker[current].from;
-        if (!from) break;
-
-        const { x: cx, y: cy } = graphNodes[current];
-        const { x: fx, y: fy } = graphNodes[from];
-
-        canvasCtx.beginPath();
-        canvasCtx.moveTo(fx, fy);
-        canvasCtx.lineTo(cx, cy);
-        canvasCtx.stroke();
-
-        current = from;
-    }
-}
 
 function showQueueInfo() {
     const statusDiv = document.getElementById("open-closed-display");
     const iteration = visitedQueue.length;
 
-    const openText = openQueue.map(n => `(${n.id}, ${n.f})`).join(", ");
+    const sortedOpen = [...openQueue].sort((a,b) => a.f - b.f || a.id.localeCompare(b.id));
+    const openText = sortedOpen.map(n => `(${n.id}, f:${n.f})`).join(", ");
     const closedText = visitedQueue.join(", ");
 
-    statusDiv.innerHTML = `Priority Queue (Iteration ${iteration}): Open Set = {${openText}}; Closed Set = {${closedText}}`;
+    statusDiv.innerHTML = `Iteration ${iteration}: Open Set = {${openText}}; Closed Set = {${closedText}}`;
+
 }
 
-renderGraph([], []);
+function updateNarrationDisplay() {
+    narrationDisplay.innerHTML = currentNarration;
+}
+
+function updateButtonStates() {
+    nextButton2.disabled = goalReached || openQueue.length === 0;
+    backButton.disabled = stepHistory.length <= 1;
+}
+
+// Initial setup
+initializeAStar();
