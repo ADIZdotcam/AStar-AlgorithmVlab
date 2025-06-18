@@ -404,8 +404,8 @@ function copyCode(elementId) {
 
 const canvasElem = document.getElementById("graphCanvas");
 const canvasCtx = canvasElem.getContext("2d");
-canvasElem.width = 300;
-canvasElem.height = 300;
+canvasElem.width = 295;
+canvasElem.height = 290;
 
 const tableBody = document.getElementById("info-table").querySelector("tbody");
 const nextButton2 = document.getElementById("next");
@@ -419,8 +419,8 @@ const graphNodes = {
     C: { x: 240, y: 65 },
     D: { x: 100, y: 135 },
     E: { x: 205, y: 170 },
-    F: { x: 275, y: 135 },
-    G: { x: 275, y: 240 },
+    F: { x: 255, y: 135 },
+    G: { x: 265, y: 240 },
     H: { x: 135, y: 240 }
 };
 
