@@ -469,6 +469,7 @@ if __name__=='__main__':
        
     </style>
 <!-- PRACTICE SECTION-->
+
     <div class="container">
         
             <h2>Graph and Heuristics</h2>
@@ -564,81 +565,78 @@ if __name__=='__main__':
                 <p>Optimal Cost: <strong>14</strong></p>
             </div>
         </div>
-    </div>
-
-
-                
-            <div class="container" id="practice1">
-                <div class="title">
-                    <h2>Grid Based Implementation</h2>
-                </div>
-            
-                <!-- Grid Diagram -->
-                <div id="grid"></div>
-                <div class="information">
-                    <h4>You can click the blocks to change them into walls and create a maze.</h4>
-                </div>
-                <!-- Execution Box -->
-                <div id="executionBox">
-                    <h3>Execution Step:</h3>
-                    <p id="stepDetails">Click 'Next Step' to begin.</p>
-                </div>
-            
-                <!-- Next Step Button -->
-                <button class="sbt" id="nextStep">Next Step</button>
-                <div class="information">
-                    <h4>Works best on bigger screens.</h4>
-                </div>
-            </div>            
-
-            <div class="container" id="practice2">
-                <div class="title">
-                    <h2>Map implementation example</h2>
-                </div>
-                    <!-- Display the MP4 Video -->
-                    <!-- Display the MP4 Video -->
-        <div class="video-container">
-            <video id="mp4Video" width="100%" controls>
-                <!-- Replace 'path-to-your-video.mp4' with your actual video path -->
-                <source src="images\map.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+    </div>                
+    <div class="container" id="practice1">
+        <div class="title">
+            <h2>Grid Based Implementation</h2>
         </div>
-                    <!-- Start/Stop Button -->
-        <div class="control-buttons">
-            <button id="playPauseBtn" onclick="toggleVideo()">Play Video</button>
+    
+        <!-- Grid Diagram -->
+        <div id="grid"></div>
+        <div class="information">
+            <h4>You can click the blocks to change them into walls and create a maze.</h4>
         </div>
-       
-        <div class="information" id="map_info">
-            <h4>Here we showed how A* Pathfinding algorithm searces the shortest distance between two cordinates/nodes on a map</h4>
-            <h4>Here Yellow dots are the visited nodes and at the end red line shows the shortest distance</h4>
+        <!-- Execution Box -->
+        <div id="executionBox">
+            <h3>Execution Step:</h3>
+            <p id="stepDetails">Click 'Next Step' to begin.</p>
         </div>
+    
+        <!-- Next Step Button -->
+        <button class="sbt" id="nextStep">Next Step</button>
         <div class="information">
             <h4>Works best on bigger screens.</h4>
         </div>
-            </div>
-            <div class="container" id="practice2">
-                <canvas id="graphCanvas"></canvas>
-            <div class="controls">
-                <button id="next">Next Step</button>
-                <button id="back">Back Step</button>
-                <button id="reset">Reset</button>
-            </div>
-            <div id="open-closed-display" style="margin-bottom: 10px; font-weight: bold;"></div>
-            <table id="info-table">
-                <thead>
-                    <tr>
-                        <th>Node</th>
-                        <th>G</th>
-                        <th>H</th>
-                        <th>F</th>
-                        <th>From</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            </div>  
+    </div>            
+
+    <div class="container" id="practice2">
+        <div class="title">
+            <h2>Map implementation example</h2>
         </div>
+            <!-- Display the MP4 Video -->
+            <!-- Display the MP4 Video -->
+<div class="video-container">
+    <video id="mp4Video" width="100%" controls>
+        <!-- Replace 'path-to-your-video.mp4' with your actual video path -->
+        <source src="images\map.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+            <!-- Start/Stop Button -->
+<div class="control-buttons">
+    <button id="playPauseBtn" onclick="toggleVideo()">Play Video</button>
+</div>
+
+<div class="information" id="map_info">
+    <h4>Here we showed how A* Pathfinding algorithm searces the shortest distance between two cordinates/nodes on a map</h4>
+    <h4>Here Yellow dots are the visited nodes and at the end red line shows the shortest distance</h4>
+</div>
+<div class="information">
+    <h4>Works best on bigger screens.</h4>
+</div>
+    </div>
+    <div class="container" id="practice2">
+        <canvas id="graphCanvas"></canvas>
+    <div class="controls">
+        <button id="next">Next Step</button>
+        <button id="back">Back Step</button>
+        <button id="reset">Reset</button>
+    </div>
+    <div id="open-closed-display" style="margin-bottom: 10px; font-weight: bold;"></div>
+    <table id="info-table">
+        <thead>
+            <tr>
+                <th>Node</th>
+                <th>G</th>
+                <th>H</th>
+                <th>F</th>
+                <th>From</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>  
+</div>
         
             <div class="container" id="result">
                 <div class="title">
