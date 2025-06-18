@@ -578,6 +578,9 @@ resetButton.addEventListener("click", () => {
     visitedTracker = { [startPoint]: { g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" } };
     tableBody.innerHTML = "";
     renderGraph([], []);
+
+    const statusDiv = document.getElementById("open-closed-display");
+    statusDiv.innerHTML = "";
 });
 
 function highlightShortestPath() {
