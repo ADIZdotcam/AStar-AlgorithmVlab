@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 ::selection {
   color: rgb(11, 0, 48);
   background: rgba(110, 188, 230, 0.675);
@@ -35,6 +36,7 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 }
+
 .logo-img {
   height: 60px;
 }
@@ -44,6 +46,7 @@ body {
   left: 50%;
   text-align: center;
 }
+
 .menu-toggle {
   display: none;
   font-size: 24px;
@@ -58,6 +61,7 @@ body {
   justify-content: flex-end;
   flex: 1;
 }
+
 .nav-menu a {
   margin-left: 15px;
   padding: 15px;
@@ -79,9 +83,8 @@ header .nav-menu a:hover {
   background-color: rgb(255, 255, 255);
   color: #000000;
   padding-top: 20px;
-  padding-bottom: 10px;
-  padding: auto;
-  padding-bottom: 5px;
+  padding-bottom: 5px; /* Consolidated from two padding-bottoms */
+  padding: auto; /* This property might be overridden by specific paddings */
   width: 100%;
 }
 
@@ -125,8 +128,7 @@ header .nav-menu a:hover {
   transition: background-color 0.7s ease;
   margin: 1rem;
   border: 2.5px solid rgb(215, 211, 211);
-  box-shadow: 0 2px 2px 0 rgb(224, 224, 224);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Consolidated box-shadow */
 }
 
 .pageview .navigation .link:hover {
@@ -151,7 +153,7 @@ header .nav-menu a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/*choti screen*/
+/* Media queries for smaller screens */
 @media screen and (max-width: 840px) {
   .header {
     flex-direction: row;
@@ -162,9 +164,9 @@ header .nav-menu a:hover {
 
   .header .vlabtitle {
     margin-right: auto;
-
     font-size: 0.75rem;
   }
+
   .menu-toggle {
     display: block;
   }
@@ -200,6 +202,7 @@ header .nav-menu a:hover {
   .nav-menu.show {
     right: 0;
   }
+
   .pageview .navigation {
     margin-top: 10px;
     padding: 5px;
@@ -221,23 +224,25 @@ header .nav-menu a:hover {
   .pageview .navigation .link span {
     font-size: 0.7rem;
   }
+
   .practical {
     margin-left: 0px;
     margin-right: 0px;
     padding: 5px;
     font-size: smaller;
   }
+
   .container {
     padding: 10px;
     margin: 0;
     text-align: center;
   }
+
   .container.centered-content {
     padding: 10px;
     margin: 0;
     text-align: center;
     width: 600px;
-
     overflow: hidden;
   }
 
@@ -249,20 +254,25 @@ header .nav-menu a:hover {
     overflow-x: scroll;
     width: 700px;
   }
+
   #code.container {
     width: 640px;
   }
+
   .desc1 {
     padding: 10px;
   }
+
   .stepsP {
     padding-left: 10px;
   }
+
   #lsEx,
   #bsEx {
     width: 60%;
     height: auto;
   }
+
   .choices {
     display: grid;
     place-items: center;
@@ -277,12 +287,11 @@ header .nav-menu a:hover {
     position: absolute;
     padding-right: 500px;
   }
+
   .ref-list li span,
   .tools-list li span {
     font-size: 14px;
   }
-
-  
 }
 
 @media (min-width: 840px) {
@@ -299,7 +308,6 @@ header .nav-menu a:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   max-width: 1500px;
   margin-left: 0px;
   margin-right: 0px;
@@ -424,6 +432,7 @@ input[type="radio"]:checked + label {
   width: 400px;
   height: auto;
 }
+
 .your-turn {
   display: flex;
   flex-direction: column;
@@ -477,14 +486,10 @@ input[type="radio"]:checked + label {
   outline: none;
 }
 
-.your-turn label,
-#arrayInput,
-#targetInput,
-
 .sbt {
   width: 100%;
   max-width: 350px;
-  margin: 20px auto; /* This centers the button */
+  margin: 20px auto;
   padding: 15px;
   font-size: 1.1rem;
   font-weight: bold;
@@ -494,9 +499,8 @@ input[type="radio"]:checked + label {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  display: block; /* Makes the button a block element */
+  display: block;
 }
-
 
 .sbt:hover {
   background-color: #0056b3;
@@ -519,22 +523,24 @@ input[type="radio"]:checked + label {
   text-align: center;
   border-radius: 5px;
 }
+
 .unchecked {
   background-color: #fff;
 }
 
 .checked {
-  background-color: #ffeb3b; 
+  background-color: #ffeb3b;
 }
 
 .uniterated {
-  background-color: #e0e0e0; 
+  background-color: #e0e0e0;
 }
 
 .found {
-  background-color: #2f9afe; 
+  background-color: #2f9afe;
   color: rgb(255, 255, 255);
 }
+
 .foundg {
   color: green;
 }
@@ -542,6 +548,7 @@ input[type="radio"]:checked + label {
 .not-found {
   color: red;
 }
+
 .blink {
   animation: blinker 0.5s linear infinite;
 }
@@ -571,104 +578,12 @@ input[type="radio"]:checked + label {
   height: 50%;
   margin: 0 auto;
 }
+
 .stepsP {
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-}
-
-.anime {
-  margin: 0 auto;
-  margin-left: 10%;
-}
-
-.anime {
-  width: 480px;
-  aspect-ratio: 3/1;
-}
-
-#submit {
-  font-size: 1rem;
-  padding: 4px 4px 4px 4px;
-  margin: 10px 10px 10px 200px;
-}
-
-#searchSteps {
-  margin: 10px 10px 10px 200px;
-}
-
-/* Quiz styles */
-.box {
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  background-color: #f7f7f7;
-  text-align: left;
-}
-
-h2 {
-  font-size: 24px;
-  color: rgb(0, 0, 0);
-}
-
-h4 {
-  font-size: 14px;
-  color: #777;
-}
-
-#question {
-  font-size: 18px;
-  margin-left: 10px;
-  margin-top: 20px;
-}
-
-.choices {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 20px;
-}
-
-.choices .choice {
-  width: 500px;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid rgb(12, 12, 12);
-  border-radius: 6px;
-  background-color: rgb(255, 255, 255);
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  overflow-wrap: break-word;
-}
-
-.choices .choice:hover {
-  background-color: rgb(46, 132, 245);
-  color: #fff;
-}
-
-.codes button,
-#next-btn {
-  margin: 20px auto; /* This centers the button horizontally */
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: block; /* Makes the button a block element */
-}
-
-
-.codes button:hover,
-#next-btn:hover,
-#searchbt:hover {
-  background-color: #6725d0;
-}
-
-.stepsP {
-  list-style: none;
-  padding-left: 0;
+  list-style: none; /* Consolidated from below */
 }
 
 .stepsP li {
@@ -682,67 +597,69 @@ h4 {
   display: block;
 }
 
-.copy-button {
-  transition: background-color 0.3s, color 0.3s;
+.anime {
+  margin: 0 auto;
+  margin-left: 10%;
+  width: 480px;
+  aspect-ratio: 3/1;
 }
 
-.copy-button:hover {
-  background-color: #1a2230;
+#submit {
+  font-size: 1rem;
+  padding: 4px; /* Consolidated padding */
+  margin: 10px 10px 10px 200px;
 }
 
-.choices {
-  margin-top: 30px;
+#searchSteps {
+  margin: 10px 10px 10px 200px;
 }
 
-#next-btn {
-  margin-top: 30px;
-}
-.code-block {
-  position: relative;
-  background-color: #f7f7f7;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
 /* Quiz styles */
 .box {
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   background-color: #f7f7f7;
-  text-align: center;
-  max-width: 600px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Consolidated from below */
+  max-width: 600px; /* Consolidated from below */
+  border-radius: 8px; /* Consolidated from below */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Consolidated from below */
 }
 
 h2 {
   font-size: 24px;
   color: rgb(0, 0, 0);
+  margin-bottom: 10px; /* Consolidated from below */
+}
+
+h4 {
+  font-size: 14px;
+  color: #777;
 }
 
 #question {
   font-size: 18px;
-  margin: 20px 0;
+  margin: 20px;
 }
 
 .choices {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Consolidated from below */
+  margin-top: 20px; /* Consolidated from below */
 }
 
 .choices .choice {
-  width: 100%;
-  max-width: 500px;
+  width: 100%; /* Consolidated from below */
+  max-width: 500px; /* Consolidated from below */
   margin: 10px 0;
   padding: 10px;
   border: 1px solid rgb(12, 12, 12);
   border-radius: 6px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0); /* Consolidated from rgb(255, 255, 255) to rgb(0,0,0) as per later definition */
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  overflow-wrap: break-word;
 }
 
 .choices .choice:hover {
@@ -751,7 +668,7 @@ h2 {
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 20px; /* Consolidated from below */
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -763,6 +680,29 @@ button {
 
 button:hover {
   background-color: #6725d0;
+}
+
+.codes button,
+#next-btn {
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+}
+
+.codes button:hover,
+#next-btn:hover,
+#searchbt:hover {
+  background-color: #6725d0;
+}
+
+#next-btn {
+  margin-top: 30px; /* Kept specific margin-top for next-btn */
 }
 
 /* Retake button styles */
@@ -781,7 +721,6 @@ button:hover {
 #retake-btn:hover {
   background-color: #218838;
 }
-
 
 /* Reference */
 .references-list {
@@ -840,7 +779,7 @@ a {
   text-decoration: none;
 }
 
-/* Tile control  */
+/* Tile control  */
 #aim,
 #theory,
 #procedure,
@@ -852,6 +791,7 @@ a {
 #tnt {
   display: none;
 }
+
 #aim {
   display: block;
 }
@@ -860,27 +800,28 @@ a {
 @media screen and (max-width: 420px) {
   .container {
     margin: 0 auto;
+    padding: 5px; /* Consolidated */
   }
+
   .practical {
     margin-left: 0px;
     margin-right: 0px;
     padding: 5px;
     font-size: smaller;
   }
-  .container {
-    padding: 5px;
-    margin: 0;
-  }
+
   #lsEx,
   #bsEx {
     width: 60%;
     height: auto;
     margin-left: -20px;
   }
+
   .your-turn {
     width: 320px;
     margin: 5px;
   }
+
   .container.centered-content {
     padding: 5px;
     margin: 0;
@@ -888,6 +829,7 @@ a {
     width: 340px;
     max-width: auto;
   }
+
   .choices {
     justify-content: space-between;
   }
@@ -895,22 +837,26 @@ a {
   .choices .choice {
     width: 300px;
     margin-left: 10px;
-    
   }
+
   .centered-content.your-turn {
     width: 300px;
   }
+
   .code-block {
     overflow: scroll;
     width: 320px;
   }
+
   #code.container {
     width: 330px;
   }
+
   #practice .stepsP li {
     width: 220px;
   }
 }
+
 /* Grid Layout */
 #grid {
   display: grid;
@@ -933,12 +879,32 @@ a {
   background-color: white;
 }
 
-.start { background-color: green; color: white; }
-.goal { background-color: red; color: white; }
-.wall { background-color: black; }
-.open-set { background-color: yellow; }
-.closed-set { background-color: lightgray; }
-.path { background-color: blue; color: white; }
+.start {
+  background-color: green;
+  color: white;
+}
+
+.goal {
+  background-color: red;
+  color: white;
+}
+
+.wall {
+  background-color: black;
+}
+
+.open-set {
+  background-color: yellow;
+}
+
+.closed-set {
+  background-color: lightgray;
+}
+
+.path {
+  background-color: blue;
+  color: white;
+}
 
 /* Execution Box - Fixed Size */
 #executionBox {
@@ -946,7 +912,7 @@ a {
   padding: 15px;
   border: 1px solid #ccc;
   width: 100%;
-  height: 100px; /* Fixed height */
+  height: 100px;
   background-color: #f9f9f9;
   text-align: left;
   font-size: 14px;
@@ -958,21 +924,25 @@ a {
   padding-top: 10px;
   text-align: center;
 }
+
 .copy-button {
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s; /* Consolidated transition */
+  position: absolute; /* Consolidated from below */
+  top: 10px; /* Consolidated from below */
+  right: 10px; /* Consolidated from below */
+  padding: 5px 10px; /* Consolidated from below */
+  background-color: #464646; /* Consolidated from below */
+  color: white; /* Consolidated from below */
+  border: none; /* Consolidated from below */
+  border-radius: 5px; /* Consolidated from below */
+  cursor: pointer; /* Consolidated from below */
+  display: none; /* Consolidated display: none from below */
 }
 
 .copy-button:hover {
-  background-color: #1a2230;
+  background-color: #1a2230; /* Kept specific hover */
 }
 
-.choices {
-  margin-top: 30px;
-}
-
-#next-btn {
-  margin-top: 30px;
-}
 .code-block {
   position: relative;
   background-color: #f7f7f7;
@@ -987,16 +957,8 @@ a {
   min-width: 1080px;
 }
 
-.copy-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  background-color: #464646;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.code-content:hover .copy-button {
+  display: block;
 }
 
 .copy-button.copied {
@@ -1004,19 +966,15 @@ a {
   color: white;
 }
 
-.code-content:hover .copy-button {
-  display: block;
-}
-
-.copy-button {
-  display: none;
-}
-
 .language-python {
   padding: 20px;
   margin: 0;
   font-size: 12px;
   white-space: pre-wrap;
+}
+
+.code-block {
+  overflow: scroll;
 }
 
 /*video map section*/
@@ -1065,3 +1023,67 @@ a {
   background-color: #004085;
 }
 
+.priority-queue {
+  background: #e8f4ff;
+  padding: 10px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.step {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-left: 4px solid #28a745;
+  border-radius: 4px;
+}
+
+.step h3 {
+  margin-top: 0;
+}
+
+.optimal {
+  background: #d4edda;
+  border-left: 4px solid #155724;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.graph-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#graphCanvas {
+  border: 2px solid black;
+  background-color: white;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}

@@ -10,8 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    const searchButton = document.getElementById('searchbt');
-    searchButton.addEventListener('click', performSearch);
+   
 
 });
 
@@ -224,20 +223,21 @@ function getNeighbors(node) {
     return neighbors;
 }
 
-// A* Stepwise Execution
 function aStarStep() {
     if (pathFound || openSet.length === 0) {
         if (!pathFound) {
-            // If no path is found, show the message and retake button
             document.getElementById("stepDetails").innerText = "Can't find path!";
             document.getElementById("nextStep").innerText = "Retake Practical";
-            //document.getElementById("retakeButton").style.display = "block";  // Show Retake button
+            document.getElementById("retakeButton").style.display = "block"; // Show Retake button
         }
         return;
     }
-    openSet.sort((a, b) => a.f - b.f);
-    let current = openSet.shift();
 
+    // Sort openSet by f-cost (can be replaced with a priority queue for efficiency)
+    openSet.sort((a, b) => a.f - b.f);
+    let current = openSet.shift(); // Remove node with lowest f-cost
+
+    // If goal is reached, reconstruct the path
     if (current === goal) {
         reconstructPath(current);
         pathFound = true;
@@ -245,34 +245,43 @@ function aStarStep() {
         return;
     }
 
+    // Move current node to closed set
     closedSet.push(current);
     current.element.classList.add("closed-set");
 
+    // Logging for debugging
     let stepLog = `Checking node (${current.row}, ${current.col}):\n`;
 
+    // Get and evaluate neighbors
     let neighbors = getNeighbors(current);
     for (let neighbor of neighbors) {
-        if (closedSet.includes(neighbor) || neighbor.wall) continue;
+        if (closedSet.includes(neighbor) || neighbor.wall) continue; // Skip closed/wall nodes
 
-        let tentativeG = current.g + 1;
+        let tentativeG = current.g + 1; // Assuming uniform movement cost
         if (!openSet.includes(neighbor)) {
-            openSet.push(neighbor);
+            openSet.push(neighbor); // Add to openSet if not already present
         } else if (tentativeG >= neighbor.g) {
-            continue;
+            continue; // Skip if no improvement
         }
 
+        // Update neighbor values
         neighbor.g = tentativeG;
         neighbor.h = heuristic(neighbor, goal);
         neighbor.f = neighbor.g + neighbor.h;
         neighbor.parent = current;
+
+        // Update visualization
         neighbor.element.classList.add("open-set");
         neighbor.element.innerText = Math.round(neighbor.f);
 
+        // Log details
         stepLog += ` → Neighbor (${neighbor.row}, ${neighbor.col}): g=${neighbor.g}, h=${neighbor.h.toFixed(2)}, f=${neighbor.f.toFixed(2)}\n`;
     }
 
+    // Display step details
     document.getElementById("stepDetails").innerText = stepLog;
 }
+
 
 // Reconstruct Path
 function reconstructPath(node) {
@@ -375,5 +384,231 @@ function toggleVideo() {
     }
 }
 
+function copyCode(elementId) {
+    const codeBlock = document.getElementById(elementId).textContent;
+    navigator.clipboard.writeText(codeBlock).then(() => {
+        let button = document.querySelector(".copy-button");
+        button.textContent = "Copied!";
+        button.style.backgroundColor = "#4CAF50"; // Green color
+
+        setTimeout(() => {
+            button.textContent = "Copy";
+            button.style.backgroundColor = ""; // Reset to default
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy code: ", err);
+    });
+}
 
 
+
+//practice 2 nodes
+const canvasElem = document.getElementById("graphCanvas");
+const canvasCtx = canvasElem.getContext("2d");
+canvasElem.width = 500;
+canvasElem.height = 500;
+
+const tableBody = document.getElementById("info-table").querySelector("tbody");
+const nextButton2 = document.getElementById("next");
+const backButton = document.getElementById("back");
+const resetButton = document.getElementById("reset");
+
+const graphNodes = {
+    A: { x: 50, y: 100 },
+    B: { x: 200, y: 50 },
+    C: { x: 350, y: 100 },
+    D: { x: 150, y: 200 },
+    E: { x: 300, y: 250 },
+    F: { x: 450, y: 200 },
+    G: { x: 400, y: 350 },
+    H: { x: 200, y: 350 }
+};
+
+const graphEdges = [
+    ["A", "B", 4], ["A", "D", 2],
+    ["B", "C", 3], ["B", "D", 5],
+    ["C", "E", 7], ["C", "F", 6],
+    ["D", "E", 3], ["D", "H", 8],
+    ["E", "G", 2], ["F", "G", 4],
+    ["H", "G", 5]
+];
+
+const startPoint = "A";
+const goalPoint = "G";
+
+const estimateHeuristic = (nodeId, goalId) => {
+    const dx = Math.abs(graphNodes[nodeId].x - graphNodes[goalId].x);
+    const dy = Math.abs(graphNodes[nodeId].y - graphNodes[goalId].y);
+    return dx + dy;
+};
+
+function renderGraph(activeQueue, exploredNodes) {
+    canvasCtx.clearRect(0, 0, canvasElem.width, canvasElem.height);
+
+    graphEdges.forEach(([src, dst, cost]) => {
+        const { x: sx, y: sy } = graphNodes[src];
+        const { x: dx, y: dy } = graphNodes[dst];
+
+        canvasCtx.beginPath();
+        canvasCtx.moveTo(sx, sy);
+        canvasCtx.lineTo(dx, dy);
+        canvasCtx.strokeStyle = "black";
+        canvasCtx.lineWidth = 2;
+        canvasCtx.stroke();
+
+        const midX = (sx + dx) / 2;
+        const midY = (sy + dy) / 2;
+
+        const angle = Math.atan2(dy - sy, dx - sx);
+        const labelOffset = 15;
+
+        const textX = midX + labelOffset * Math.cos(angle + Math.PI / 2);
+        const textY = midY + labelOffset * Math.sin(angle + Math.PI / 2);
+
+        canvasCtx.fillStyle = "red";
+        canvasCtx.font = "14px Arial";
+        canvasCtx.fillText(cost, textX, textY);
+    });
+
+    Object.keys(graphNodes).forEach(nodeId => {
+        canvasCtx.beginPath();
+        canvasCtx.arc(graphNodes[nodeId].x, graphNodes[nodeId].y, 20, 0, 2 * Math.PI);
+
+        if (nodeId === startPoint) canvasCtx.fillStyle = "green";
+        else if (nodeId === goalPoint) canvasCtx.fillStyle = "cyan";
+        else if (exploredNodes.includes(nodeId)) canvasCtx.fillStyle = "red";
+        else if (activeQueue.map(n => n.id).includes(nodeId)) canvasCtx.fillStyle = "lightgreen";
+        else canvasCtx.fillStyle = "lightblue";
+
+        canvasCtx.fill();
+        canvasCtx.strokeStyle = "black";
+        canvasCtx.stroke();
+
+        canvasCtx.fillStyle = "black";
+        canvasCtx.font = "16px Arial";
+        canvasCtx.fillText(nodeId, graphNodes[nodeId].x - 5, graphNodes[nodeId].y + 5);
+    });
+}
+
+let openQueue = [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 0, from: null }];
+let visitedQueue = [];
+let stepHistory = [];
+let visitedTracker = { [startPoint]: { g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" } };
+
+function runAStarStep() {
+    if (openQueue.length === 0) return;
+
+    openQueue.sort((a, b) => a.f - b.f);
+    const currentNode = openQueue.shift();
+    visitedQueue.push(currentNode.id);
+    stepHistory.push([...visitedQueue]);
+
+    if (visitedQueue.includes(goalPoint)) {
+        renderGraph(openQueue, visitedQueue);
+        highlightShortestPath();
+        return;
+    }
+
+    graphEdges.forEach(([src, dst, weight]) => {
+        if (src !== currentNode.id) return;
+        if (visitedQueue.includes(dst)) return;
+
+        const gScore = currentNode.g + weight;
+        const hScore = estimateHeuristic(dst, goalPoint);
+        const fScore = gScore + hScore;
+        const existingNode = openQueue.find(n => n.id === dst);
+
+        if (!existingNode || gScore < existingNode.g) {
+            openQueue.push({ id: dst, g: gScore, h: hScore, f: fScore, from: currentNode.id });
+            if (!visitedTracker[dst] || gScore < visitedTracker[dst].g) {
+                visitedTracker[dst] = { g: gScore, h: hScore, f: fScore, from: currentNode.id };
+            }
+        }
+    });
+
+    updateTableDisplay();
+    renderGraph(openQueue, visitedQueue);
+    showQueueInfo();
+}
+
+function updateTableDisplay() {
+    tableBody.innerHTML = "";
+    Object.entries(visitedTracker).forEach(([node, { g, h, f, from }]) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${node}</td><td>${g}</td><td>${h}</td><td>${f}</td><td>${from || "-"}</td>`;
+        tableBody.appendChild(row);
+    });
+}
+
+nextButton2.addEventListener("click", () => {
+    runAStarStep();
+    showQueueInfo();
+});
+
+backButton.addEventListener("click", () => {
+    if (stepHistory.length === 0 || visitedQueue.length === 0) return;
+
+    const removedNode = visitedQueue.pop();
+    stepHistory.pop();
+
+    Object.keys(visitedTracker).forEach(node => {
+        if (visitedTracker[node].from === removedNode) {
+            delete visitedTracker[node];
+        }
+    });
+
+    delete visitedTracker[removedNode];
+
+    openQueue = stepHistory.length > 0
+        ? stepHistory[stepHistory.length - 1].map(n => ({
+            id: n,
+            ...visitedTracker[n]
+        }))
+        : [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" }];
+
+    updateTableDisplay();
+    renderGraph(openQueue, visitedQueue);
+    showQueueInfo();
+});
+
+resetButton.addEventListener("click", () => {
+    openQueue = [{ id: startPoint, g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 0, from: null }];
+    visitedQueue = [];
+    stepHistory = [];
+    visitedTracker = { [startPoint]: { g: 0, h: estimateHeuristic(startPoint, goalPoint), f: 600, from: "-" } };
+    tableBody.innerHTML = "";
+    renderGraph([], []);
+});
+
+function highlightShortestPath() {
+    let current = goalPoint;
+    canvasCtx.strokeStyle = "purple";
+    canvasCtx.lineWidth = 4;
+
+    while (current && visitedTracker[current]?.from !== null) {
+        const from = visitedTracker[current].from;
+        if (!from) break;
+
+        const { x: cx, y: cy } = graphNodes[current];
+        const { x: fx, y: fy } = graphNodes[from];
+
+        canvasCtx.beginPath();
+        canvasCtx.moveTo(fx, fy);
+        canvasCtx.lineTo(cx, cy);
+        canvasCtx.stroke();
+
+        current = from;
+    }
+}
+
+function showQueueInfo() {
+    const statusDiv = document.getElementById("open-closed-display");
+    const iteration = visitedQueue.length;
+
+    const openText = openQueue.map(n => `(${n.id}, ${n.f})`).join(", ");
+    const closedText = visitedQueue.join(", ");
+
+    statusDiv.innerHTML = `Priority Queue (Iteration ${iteration}): Open Set = {${openText}}; Closed Set = {${closedText}}`;
+}
+
+renderGraph([], []);
