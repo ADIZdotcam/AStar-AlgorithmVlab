@@ -154,8 +154,8 @@ document.addEventListener('DOMContentLoaded', function () {
     createGrid();
 });
 
-const rows = 5;
-const cols = 10;
+const rows = 7 ;
+const cols = 7;
 let grid = [];
 let openSet = [];
 let closedSet = [];
@@ -405,8 +405,8 @@ function copyCode(elementId) {
 //practice 2 nodes
 const canvasElem = document.getElementById("graphCanvas");
 const canvasCtx = canvasElem.getContext("2d");
-canvasElem.width = 350;
-canvasElem.height = 350;
+canvasElem.width = 300;
+canvasElem.height = 300;
 
 const tableBody = document.getElementById("info-table").querySelector("tbody");
 const nextButton2 = document.getElementById("next");
@@ -414,14 +414,14 @@ const backButton = document.getElementById("back");
 const resetButton = document.getElementById("reset");
 
 const graphNodes = {
-    A: { x: 35, y: 70 },
-    B: { x: 140, y: 35 },
-    C: { x: 245, y: 70 },
-    D: { x: 105, y: 140 },
-    E: { x: 210, y: 175 },
-    F: { x: 315, y: 140 },
-    G: { x: 280, y: 245 },
-    H: { x: 140, y: 245 }
+    A: { x: 30, y: 65 },
+    B: { x: 135, y: 30 },
+    C: { x: 240, y: 65 },
+    D: { x: 100, y: 135 },
+    E: { x: 205, y: 170 },
+    F: { x: 275, y: 135 },
+    G: { x: 275, y: 240 },
+    H: { x: 135, y: 240 }
 };
 
 const graphEdges = [

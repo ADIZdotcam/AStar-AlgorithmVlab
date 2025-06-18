@@ -923,17 +923,7 @@ a {
   color: white;
 }
 
-#practice1 {
-  margin-top: 20px;
-  margin-left: 0%;
-  margin-right: 0%;
-  margin-bottom: 0%;
-  padding: 20px;
-  background-color: #e9f7fa;
-  border: 1px solid #b2ebf2;
-  border-radius: 8px;
-  text-align: center;
-}
+
 
 
 /* Execution Box - Fixed Size */
@@ -1009,11 +999,6 @@ a {
 
 /*video map section*/
 #practice2 {
-  margin-top: 20px;
-  margin-left: 0%;
-  margin-right: 0%;
-  margin-bottom: 0%;
-  padding: 20px;
   background-color: #e9f7fa;
   border: 1px solid #b2ebf2;
   border-radius: 8px;
