@@ -14,7 +14,8 @@ body {
   background-color: rgba(255, 255, 255, 0.603);
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevents horizontal scroll from overflowing elements */
+  font-size: 16px; /* Base font size for 'rem' units, aids scaling */
 }
 
 /* Header styles */
@@ -83,8 +84,8 @@ header .nav-menu a:hover {
   background-color: rgb(255, 255, 255);
   color: #000000;
   padding-top: 20px;
-  padding-bottom: 5px; /* Consolidated from two padding-bottoms */
-  padding: auto; /* This property might be overridden by specific paddings */
+  padding-bottom: 5px;
+  padding: auto;
   width: 100%;
 }
 
@@ -128,7 +129,7 @@ header .nav-menu a:hover {
   transition: background-color 0.7s ease;
   margin: 1rem;
   border: 2.5px solid rgb(215, 211, 211);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Consolidated box-shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .pageview .navigation .link:hover {
@@ -153,7 +154,7 @@ header .nav-menu a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Media queries for smaller screens */
+/* Media queries for smaller screens (Header/Nav) */
 @media screen and (max-width: 840px) {
   .header {
     flex-direction: row;
@@ -224,74 +225,6 @@ header .nav-menu a:hover {
   .pageview .navigation .link span {
     font-size: 0.7rem;
   }
-
-  .practical {
-    margin-left: 0px;
-    margin-right: 0px;
-    padding: 5px;
-    font-size: smaller;
-  }
-
-  .container {
-    padding: 10px;
-    margin: 0;
-    text-align: center;
-  }
-
-  .container.centered-content {
-    padding: 10px;
-    margin: 0;
-    text-align: center;
-    width: 600px;
-    overflow: hidden;
-  }
-
-  #practice {
-    overflow-x: auto;
-  }
-
-  .code-content {
-    overflow-x: scroll;
-    width: 700px;
-  }
-
-  #code.container {
-    width: 640px;
-  }
-
-  .desc1 {
-    padding: 10px;
-  }
-
-  .stepsP {
-    padding-left: 10px;
-  }
-
-  #lsEx,
-  #bsEx {
-    width: 60%;
-    height: auto;
-  }
-
-  .choices {
-    display: grid;
-    place-items: center;
-    justify-content: space-between;
-  }
-
-  .choice {
-    flex: 0 0 calc(25% - 10px);
-  }
-
-  .copy-button {
-    position: absolute;
-    padding-right: 500px;
-  }
-
-  .ref-list li span,
-  .tools-list li span {
-    font-size: 14px;
-  }
 }
 
 @media (min-width: 840px) {
@@ -300,194 +233,247 @@ header .nav-menu a:hover {
   }
 }
 
-/* Practical section */
+/* --- PRACTICE SECTION STYLES (MODIFIED FOR RESPONSIVENESS) --- */
 .practical {
   padding: 15px;
   background-color: #ffffff;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stacks containers vertically on small screens */
   justify-content: center;
   align-items: center;
-  max-width: 1500px;
-  margin-left: 0px;
-  margin-right: 0px;
+  max-width: 1500px; /* Limits overall width on large screens */
+  margin: 0 auto; /* Centers the whole practical section */
 }
 
-.practical .container {
-  flex: 0 0 calc(33.33% - 20px);
+/* Styles for all .container divs within the practical section */
+.container {
+  flex: 1 1 100%; /* Take full width on small screens */
   margin: 20px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #fff;
-  text-align: justify;
+  text-align: justify; /* Default text alignment */
+  max-width: 900px; /* Sensible max-width for content inside containers */
 }
 
-.practical .centered-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.practical .centered-content .title {
-  text-align: left;
-}
-
-.container.centered-content {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  margin: 5px;
+/* Specific styles for #practice2 containers (both instances) */
+#practice2 {
+  margin-top: 20px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  background-color: #e9f7fa;
+  border: 1px solid #b2ebf2;
+  border-radius: 8px;
+  text-align: center; /* Center content within these specific containers */
 }
 
-.practical .container .title {
+/* --- Headings --- */
+h2 {
   font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-  padding-top: 10px;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+  text-align: center; /* Ensure headings are centered */
 }
 
-.practical .container .content {
-  font-size: 1rem;
+h3 {
+  margin-top: 0;
+  font-size: 1.3rem; /* Responsive font size */
 }
 
-.practical .container p {
+h4 {
+  font-size: 14px;
+  color: #777;
+}
+
+/* --- Paragraphs and Lists --- */
+p {
   margin-bottom: 10px;
   font-size: 18px;
+  line-height: 1.5;
 }
 
-.practical .container ol {
-  margin-left: 20px;
+ul,
+ol {
+  padding-left: 0px;
+  margin: 10px 0;
 }
 
-.practical .container li {
-  margin-bottom: 5px;
+li {
+  margin-bottom: 10px;
 }
 
-.copy-button {
-  background-color: #256fd0;
-  color: #ffffff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: 10px;
-  transition: background-color 0.3s;
-}
-
-.copy-button:hover {
-  background-color: #007bff;
-}
-
-.switch-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-.switch-container label {
-  cursor: pointer;
-  padding: 10px 20px;
-  background-color: #8227f9;
-  color: #fff;
-  border-radius: 5px;
-  margin: 0 10px;
-}
-
-input[type="radio"]:checked + label {
-  background-color: #27ebf9;
-  display: block;
-  border: solid greenyellow;
-}
-
-.code-blocks {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.code-block {
-  display: none;
-}
-
-.code-block.active {
-  display: block;
-}
-
-#lsEx,
-#bsEx {
-  width: 400px;
-  height: auto;
-}
-
-.your-turn {
+.stepsP {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  padding: 30px;
-  border: 1px solid #ddd;
-  width: 100%;
-  max-width: 700px;
-  border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
+  padding-left: 20px;
+  list-style: none;
 }
 
-.your-turn:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-#labyt {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 25px;
+.stepsP li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
   color: #333;
+}
+
+.stepsP span {
+  display: block;
+}
+
+/* --- Images and Videos --- */
+.image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-container img {
+  max-width: 100%; /* CRUCIAL: Makes image scale down */
+  height: auto; /* Maintains aspect ratio */
+  display: block;
+  margin: 0 auto; /* Centers image */
+}
+
+.video-container {
+  margin-top: 20px;
   text-align: center;
 }
 
-.your-turn label {
-  font-weight: bold;
-  display: block;
-  margin-top: 15px;
-  font-size: 1.1rem;
-  color: #555;
-}
-
-#arrayInput,
-#targetInput {
-  width: 100%;
-  padding: 15px;
-  border: 1px solid #ddd;
+.video-container video {
+  max-width: 100%; /* CRUCIAL: Makes video scale down */
+  height: auto; /* Maintains aspect ratio, overrides fixed height */
   border-radius: 8px;
-  font-size: 1.1rem;
-  margin-top: 15px;
-  transition: border-color 0.3s ease;
 }
 
-#arrayInput:focus,
-#targetInput:focus {
-  border-color: #007bff;
-  outline: none;
+/* --- Tables (Crucial for responsiveness) --- */
+table {
+  width: 100%; /* Table takes full width of its container */
+  border-collapse: collapse;
+  background: white;
+  margin: 20px 0;
+  display: block; /* CRUCIAL: Allows horizontal scrolling */
+  overflow-x: auto; /* CRUCIAL: Adds horizontal scrollbar if needed */
+  white-space: nowrap; /* Prevents cells from wrapping unless explicitly allowed */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
+th,
+td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+  white-space: normal; /* Allows text within cells to wrap normally */
+  font-size: 16px;
+  min-width: 80px; /* Ensures minimum width for columns for readability/touch */
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+/* --- Specific Content Blocks --- */
+.priority-queue {
+  background: #e8f4ff;
+  padding: 10px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.step {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-left: 4px solid #28a745;
+  border-radius: 4px;
+}
+
+.optimal {
+  background: #d4edda;
+  border-left: 4px solid #155724;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+/* --- Grid-Based Implementation Section --- */
+#grid {
+  display: grid;
+  /* CRUCIAL: Flexible columns for small screens */
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  gap: 1px; /* Reduced gap for smaller cells */
+  margin: 20px auto;
+  width: 100%; /* Take full width on small screens */
+  max-width: 450px; /* Limits max width for desktop if grid becomes too wide */
+  overflow-x: auto; /* Enable scrolling for very small grid displays */
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #aaa; /* Border around the entire grid */
+}
+
+.cell {
+  width: auto;
+  height: auto;
+  aspect-ratio: 1 / 1; /* CRUCIAL: Keep cells square */
+  border: 1px solid #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem; /* Smaller font for cell content */
+  font-weight: bold;
+  text-align: center;
+  background-color: white;
+  min-width: 28px; /* Minimum size for touch interaction */
+  min-height: 28px;
+}
+
+/* Grid cell colors */
+.start {
+  background-color: green;
+  color: white;
+}
+.goal {
+  background-color: red;
+  color: white;
+}
+.wall {
+  background-color: black;
+}
+.open-set {
+  background-color: yellow;
+}
+.closed-set {
+  background-color: lightgray;
+}
+.path {
+  background-color: blue;
+  color: white;
+}
+
+/* --- Execution Box --- */
+#executionBox {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  width: 100%; /* Take full width on small screens */
+  height: auto; /* CRUCIAL: Auto height for content flexibility */
+  min-height: 80px; /* Minimum height for initial content */
+  max-height: 150px; /* Maximum height before content scrolls */
+  background-color: #f9f9f9;
+  text-align: left;
+  font-size: 14px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  display: block; /* Ensures it takes full line */
+}
+
+.information {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* --- Buttons --- */
 .sbt {
-  width: 100%;
+  width: 90%; /* Adjusted for better mobile touch target */
   max-width: 350px;
   margin: 20px auto;
   padding: 15px;
@@ -511,130 +497,85 @@ input[type="radio"]:checked + label {
   box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
-.array-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.array-element {
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #000;
-  text-align: center;
-  border-radius: 5px;
-}
-
-.unchecked {
-  background-color: #fff;
-}
-
-.checked {
-  background-color: #ffeb3b;
-}
-
-.uniterated {
-  background-color: #e0e0e0;
-}
-
-.found {
-  background-color: #2f9afe;
-  color: rgb(255, 255, 255);
-}
-
-.foundg {
-  color: green;
-}
-
-.not-found {
-  color: red;
-}
-
-.blink {
-  animation: blinker 0.5s linear infinite;
-}
-
-@keyframes blinker {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-#resultsContainer {
+.control-buttons {
   margin-top: 20px;
-  font-size: 1rem;
+  display: flex; /* CRUCIAL: Use flexbox for buttons */
+  justify-content: center;
+  flex-wrap: wrap; /* Allows buttons to wrap to next line on small screens */
+  gap: 10px;
 }
 
-.desc1 {
-  text-align: justify;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  max-width: 100%;
-  height: 50%;
-  margin: 0 auto;
-}
-
-.stepsP {
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-  list-style: none; /* Consolidated from below */
-}
-
-.stepsP li {
-  margin-bottom: 10px;
+.control-buttons button {
+  padding: 10px 15px; /* Adjusted padding for better fit */
+  margin: 0;
   font-size: 16px;
-  line-height: 1.5;
-  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s;
 }
 
-.stepsP span {
+.control-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.control-buttons button:active {
+  background-color: #004085;
+}
+
+/* Controls buttons for graphCanvas */
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.controls button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.controls button:hover {
+  background-color: #6725d0;
+}
+
+/* --- Canvas and Table for Graph Implementation --- */
+#graphCanvas {
+  max-width: 100%; /* CRUCIAL: Ensures canvas scales down */
+  height: auto; /* Maintains aspect ratio */
   display: block;
+  margin: 20px auto;
+  border: 2px solid black;
+  background-color: white;
 }
 
-.anime {
-  margin: 0 auto;
-  margin-left: 10%;
-  width: 480px;
-  aspect-ratio: 3/1;
+#open-closed-display {
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center; /* Ensure this text is centered */
 }
 
-#submit {
-  font-size: 1rem;
-  padding: 4px; /* Consolidated padding */
-  margin: 10px 10px 10px 200px;
-}
-
-#searchSteps {
-  margin: 10px 10px 10px 200px;
-}
-
-/* Quiz styles */
+/* --- Quiz styles (from your original CSS) --- */
 .box {
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
   background-color: #f7f7f7;
-  text-align: center; /* Consolidated from below */
-  max-width: 600px; /* Consolidated from below */
-  border-radius: 8px; /* Consolidated from below */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Consolidated from below */
-}
-
-h2 {
-  font-size: 24px;
-  color: rgb(0, 0, 0);
-  margin-bottom: 10px; /* Consolidated from below */
-}
-
-h4 {
-  font-size: 14px;
-  color: #777;
+  text-align: center;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #question {
@@ -645,21 +586,22 @@ h4 {
 .choices {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Consolidated from below */
-  margin-top: 20px; /* Consolidated from below */
+  align-items: center;
+  margin-top: 20px;
 }
 
 .choices .choice {
-  width: 100%; /* Consolidated from below */
-  max-width: 500px; /* Consolidated from below */
+  width: 100%;
+  max-width: 500px;
   margin: 10px 0;
   padding: 10px;
   border: 1px solid rgb(12, 12, 12);
   border-radius: 6px;
-  background-color: rgb(0, 0, 0); /* Consolidated from rgb(255, 255, 255) to rgb(0,0,0) as per later definition */
+  background-color: rgb(0, 0, 0);
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
   overflow-wrap: break-word;
+  color: white; /* Added based on the background, assuming text should be visible */
 }
 
 .choices .choice:hover {
@@ -668,7 +610,7 @@ h4 {
 }
 
 button {
-  margin-top: 20px; /* Consolidated from below */
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
@@ -702,7 +644,7 @@ button:hover {
 }
 
 #next-btn {
-  margin-top: 30px; /* Kept specific margin-top for next-btn */
+  margin-top: 30px;
 }
 
 /* Retake button styles */
@@ -779,7 +721,7 @@ a {
   text-decoration: none;
 }
 
-/* Tile control  */
+/* Tile control */
 #aim,
 #theory,
 #procedure,
@@ -800,7 +742,7 @@ a {
 @media screen and (max-width: 420px) {
   .container {
     margin: 0 auto;
-    padding: 5px; /* Consolidated */
+    padding: 5px;
   }
 
   .practical {
@@ -857,233 +799,445 @@ a {
   }
 }
 
-/* Grid Layout */
-#grid {
-  display: grid;
-  grid-template-columns: repeat(15, 30px);
-  gap: 2px;
-  margin: 20px auto;
-  width: fit-content;
+/* --- MEDIA QUERIES FOR PRACTICE SECTION --- */
+
+/* Tablet and smaller screens (overrides for screens <= 840px) */
+@media screen and (max-width: 840px) {
+  /* Containers */
+  .container {
+    padding: 15px; /* Slightly less padding on smaller screens */
+    margin: 10px auto; /* More compact vertical margin, centered */
+    max-width: 95%; /* Allow containers to take up more width */
+  }
+
+  /* Headings */
+  h2 {
+    font-size: 1.3rem; /* Smaller heading for mobile */
+  }
+
+  h4 {
+    font-size: 0.85rem; /* Smaller sub-heading for mobile */
+  }
+
+  /* Paragraphs and Lists */
+  p {
+    font-size: 0.95rem; /* Smaller paragraph text for mobile */
+  }
+
+  ul li,
+  ol li {
+    margin-bottom: 0.4em; /* More compact list items */
+  }
+
+  /* Tables */
+  th,
+  td {
+    padding: 8px; /* Further reduce padding in tables */
+    font-size: 0.9rem; /* Smaller font in tables */
+    min-width: 60px; /* Adjust min-width if columns still overflow */
+  }
+
+  /* Grid adjustments */
+  #grid {
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr)); /* Even smaller cells if needed */
+    gap: 0.5px;
+  }
+
+  .cell {
+    font-size: 0.65rem; /* Smaller font in grid cells */
+    min-width: 20px;
+    min-height: 20px;
+  }
+
+  /* Execution box */
+  #executionBox {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  /* Buttons */
+  .sbt {
+    padding: 12px;
+    font-size: 1rem;
+    width: 95%; /* Wider button for easier tapping */
+  }
+
+  .control-buttons button,
+  .controls button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  /* Specific elements from your original media query */
+  .practical {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 5px;
+    font-size: smaller; /* Using smaller font to force text scaling for very small screens */
+  }
 }
 
-.cell {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #aaa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-  text-align: center;
-  background-color: white;
+/* Further adjustments for very small screens (overrides for screens <= 420px) */
+@media screen and (max-width: 420px) {
+  .container {
+    padding: 10px;
+    margin: 8px auto;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  #grid {
+    grid-template-columns: repeat(auto-fit, minmax(18px, 1fr));
+  }
+  .cell {
+    font-size: 0.6rem;
+    min-width: 18px;
+    min-height: 18px;
+  }
+
+  th,
+  td {
+    font-size: 0.85rem;
+    padding: 6px;
+    min-width: 50px;
+  }
+
+  .sbt {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .control-buttons button,
+  .controls button {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
 }
 
-.start {
-  background-color: green;
-  color: white;
-}
+/* Original large screen media query */
+@media (min-width: 840px) {
+  .nav-menu .close-btn {
+    display: none;
+  }
 
-.goal {
-  background-color: red;
-  color: white;
-}
+  .practical {
+    flex-direction: column; /* Keep column layout for main containers unless specific flex is applied */
+  }
 
-.wall {
-  background-color: black;
-}
+  /* Restore original desktop styles for containers */
+  .container {
+    flex: 0 0 calc(33.33% - 20px); /* This rule from .practical .container would apply if .container is inside .practical */
+    margin: 20px;
+    padding: 20px;
+    text-align: justify;
+    max-width: 1500px; /* Revert to potentially wider max-width for content */
+  }
 
-.open-set {
-  background-color: yellow;
-}
+  /* Specific media query rules from your original CSS for larger screens */
+  .practical .container {
+    flex: 0 0 calc(33.33% - 20px);
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    text-align: justify;
+  }
 
-.closed-set {
-  background-color: lightgray;
-}
+  .practical .centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.path {
-  background-color: blue;
-  color: white;
-}
+  .practical .centered-content .title {
+    text-align: left;
+  }
 
-/* Execution Box - Fixed Size */
-#executionBox {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  width: 100%;
-  height: 100px;
-  background-color: #f9f9f9;
-  text-align: left;
-  font-size: 14px;
-  overflow-y: auto;
-  display: inline-block;
-}
+  .container.centered-content {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+  }
 
-.information {
-  padding-top: 10px;
-  text-align: center;
-}
+  .practical .container .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 10px;
+  }
 
-.copy-button {
-  transition: background-color 0.3s, color 0.3s; /* Consolidated transition */
-  position: absolute; /* Consolidated from below */
-  top: 10px; /* Consolidated from below */
-  right: 10px; /* Consolidated from below */
-  padding: 5px 10px; /* Consolidated from below */
-  background-color: #464646; /* Consolidated from below */
-  color: white; /* Consolidated from below */
-  border: none; /* Consolidated from below */
-  border-radius: 5px; /* Consolidated from below */
-  cursor: pointer; /* Consolidated from below */
-  display: none; /* Consolidated display: none from below */
-}
+  .practical .container .content {
+    font-size: 1rem;
+  }
 
-.copy-button:hover {
-  background-color: #1a2230; /* Kept specific hover */
-}
+  .practical .container p {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
 
-.code-block {
-  position: relative;
-  background-color: #f7f7f7;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
+  .practical .container ol {
+    margin-left: 20px;
+  }
 
-.code-content {
-  position: relative;
-  min-width: 1080px;
-}
+  .practical .container li {
+    margin-bottom: 5px;
+  }
 
-.code-content:hover .copy-button {
-  display: block;
-}
+  #lsEx,
+  #bsEx {
+    width: 400px;
+    height: auto;
+  }
 
-.copy-button.copied {
-  background-color: #171717;
-  color: white;
-}
+  .your-turn {
+    max-width: 700px;
+  }
 
-.language-python {
-  padding: 20px;
-  margin: 0;
-  font-size: 12px;
-  white-space: pre-wrap;
-}
+  .sbt {
+    max-width: 350px;
+  }
 
-.code-block {
-  overflow: scroll;
-}
+  .array-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-/*video map section*/
-#practice2 {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #e9f7fa;
-  border: 1px solid #b2ebf2;
-  border-radius: 8px;
-  text-align: center;
-}
+  .array-element {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #000;
+    text-align: center;
+    border-radius: 5px;
+  }
 
-.video-container {
-  margin-top: 20px;
-  text-align: center;
-}
+  .unchecked {
+    background-color: #fff;
+  }
 
-.video-container video {
-  max-width: 100%;
-  height: 481px;
-  border-radius: 8px;
-}
+  .checked {
+    background-color: #ffeb3b;
+  }
 
-/* Styling for the button */
-.control-buttons {
-  margin-top: 20px;
-}
+  .uniterated {
+    background-color: #e0e0e0;
+  }
 
-.control-buttons button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s;
-}
+  .found {
+    background-color: #2f9afe;
+    color: rgb(255, 255, 255);
+  }
 
-.control-buttons button:hover {
-  background-color: #0056b3;
-}
+  .foundg {
+    color: green;
+  }
 
-.control-buttons button:active {
-  background-color: #004085;
-}
+  .not-found {
+    color: red;
+  }
 
-.priority-queue {
-  background: #e8f4ff;
-  padding: 10px;
-  border-left: 4px solid #007bff;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
+  .blink {
+    animation: blinker 0.5s linear infinite;
+  }
 
-.step {
-  margin-bottom: 20px;
-  padding: 15px;
-  background: #f9f9f9;
-  border-left: 4px solid #28a745;
-  border-radius: 4px;
-}
+  @keyframes blinker {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
-.step h3 {
-  margin-top: 0;
-}
+  #resultsContainer {
+    margin-top: 20px;
+    font-size: 1rem;
+  }
 
-.optimal {
-  background: #d4edda;
-  border-left: 4px solid #155724;
-  padding: 15px;
-  border-radius: 4px;
-}
+  .desc1 {
+    text-align: justify;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 100%;
+    height: 50%;
+    margin: 0 auto;
+  }
 
-.graph-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
+  .anime {
+    margin: 0 auto;
+    margin-left: 10%;
+    width: 480px;
+    aspect-ratio: 3/1;
+  }
 
-#graphCanvas {
-  border: 2px solid black;
-  background-color: white;
-}
+  #submit {
+    font-size: 1rem;
+    padding: 4px;
+    margin: 10px 10px 10px 200px;
+  }
 
-.table-container {
-  margin-top: 20px;
-}
+  #searchSteps {
+    margin: 10px 10px 10px 200px;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-}
+  .copy-button {
+    background-color: #256fd0;
+    color: #ffffff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #464646;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+  }
 
-table,
-th,
-td {
-  border: 1px solid black;
-}
+  .copy-button:hover {
+    background-color: #1a2230;
+  }
 
-th,
-td {
-  padding: 10px;
-  text-align: center;
-}
+  .code-block {
+    position: relative;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
 
-th {
-  background-color: #007bff;
-  color: white;
+  .code-content {
+    position: relative;
+    min-width: 1080px;
+  }
+
+  .code-content:hover .copy-button {
+    display: block;
+  }
+
+  .copy-button.copied {
+    background-color: #171717;
+    color: white;
+  }
+
+  .language-python {
+    padding: 20px;
+    margin: 0;
+    font-size: 12px;
+    white-space: pre-wrap;
+  }
+
+  .code-block {
+    overflow: scroll;
+  }
+
+  /*video map section*/
+  #practice2 {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e9f7fa;
+    border: 1px solid #b2ebf2;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .video-container video {
+    max-width: 100%;
+    height: 481px;
+    border-radius: 8px;
+  }
+
+  .priority-queue {
+    background: #e8f4ff;
+    padding: 10px;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .step {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-left: 4px solid #28a745;
+    border-radius: 4px;
+  }
+
+  .step h3 {
+    margin-top: 0;
+  }
+
+  .optimal {
+    background: #d4edda;
+    border-left: 4px solid #155724;
+    padding: 15px;
+    border-radius: 4px;
+  }
+
+  .graph-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  #graphCanvas {
+    border: 2px solid black;
+    background-color: white;
+  }
+
+  .table-container {
+    margin-top: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #007bff;
+    color: white;
+  }
+
+  #executionBox {
+    height: 100px;
+  }
 }
