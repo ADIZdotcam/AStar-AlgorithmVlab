@@ -507,7 +507,7 @@ function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
         const textY = midY + labelOffset * Math.sin(angle + Math.PI / 2);
 
         canvasCtx.fillStyle = "red";
-        canvasCtx.font = "14px Arial";
+        canvasCtx.font = "12px Arial";
         canvasCtx.fillText(cost, textX, textY);
     });
 
@@ -516,10 +516,10 @@ function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
         canvasCtx.beginPath();
         canvasCtx.arc(graphNodes[nodeId].x, graphNodes[nodeId].y, 20, 0, 2 * Math.PI);
 
-        if (nodeId === startPoint) canvasCtx.fillStyle = "green";
-        else if (nodeId === goalPoint) canvasCtx.fillStyle = "cyan";
-        else if (currentVisitedQueue.includes(nodeId)) canvasCtx.fillStyle = "red";
-        else if (currentOpenQueue.some(n => n.id === nodeId)) canvasCtx.fillStyle = "lightgreen";
+        if (nodeId === startPoint) canvasCtx.fillStyle = "yellow";
+        else if (nodeId === goalPoint) canvasCtx.fillStyle = "Red";
+        else if (currentVisitedQueue.includes(nodeId)) canvasCtx.fillStyle = "gray";
+        else if (currentOpenQueue.some(n => n.id === nodeId)) canvasCtx.fillStyle = "Orange";
         else canvasCtx.fillStyle = "lightblue";
 
         canvasCtx.fill();
