@@ -413,15 +413,16 @@ const backButton = document.getElementById("back");
 const resetButton = document.getElementById("reset");
 const narrationDisplay = document.getElementById("narration-display"); // New element for narration
 
+// This is how your graphNodes should look with the new properties added to existing definitions
 const graphNodes = {
-    A: { x: 30, y: 65 },
-    B: { x: 135, y: 30 },
-    C: { x: 240, y: 65 },
-    D: { x: 100, y: 135 },
-    E: { x: 205, y: 170 },
-    F: { x: 255, y: 135 },
-    G: { x: 265, y: 240 },
-    H: { x: 135, y: 240 }
+    A: { x: 30, y: 65, hXOffset: 0, hYOffset: - 30 },
+    B: { x: 135, y: 30, hXOffset: 25, hYOffset:  - 20  },
+    C: { x: 240, y: 65, hXOffset: 0, hYOffset:  - 30  },
+    D: { x: 100, y: 135, hXOffset: -5, hYOffset:  - 30  },
+    E: { x: 205, y: 170, hXOffset: -5, hYOffset: - 30 },
+    F: { x: 275, y: 135, hXOffset: 0, hYOffset:  - 30  },
+    G: { x: 275, y: 240, hXOffset: 0, hYOffset:   30  },
+    H: { x: 135, y: 240, hXOffset: 5, hYOffset:  - 30  }
 };
 
 const graphEdges = [
@@ -482,6 +483,9 @@ function initializeAStar() {
     updateButtonStates();
 }
 
+//##########################################################################################
+
+
 function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
     canvasCtx.clearRect(0, 0, canvasElem.width, canvasElem.height);
 
@@ -508,27 +512,47 @@ function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
 
         canvasCtx.fillStyle = "red";
         canvasCtx.font = "12px Arial";
+        canvasCtx.textAlign = "center"; // Ensure text alignment is set
+        canvasCtx.textBaseline = "middle";
         canvasCtx.fillText(cost, textX, textY);
     });
 
     // Draw nodes
     Object.keys(graphNodes).forEach(nodeId => {
+        const node = graphNodes[nodeId]; // Get the node object including offsets
         canvasCtx.beginPath();
-        canvasCtx.arc(graphNodes[nodeId].x, graphNodes[nodeId].y, 20, 0, 2 * Math.PI);
+        canvasCtx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
 
+        // Apply your chosen color scheme
         if (nodeId === startPoint) canvasCtx.fillStyle = "yellow";
-        else if (nodeId === goalPoint) canvasCtx.fillStyle = "Red";
+        else if (nodeId === goalPoint) canvasCtx.fillStyle = "red";
         else if (currentVisitedQueue.includes(nodeId)) canvasCtx.fillStyle = "gray";
-        else if (currentOpenQueue.some(n => n.id === nodeId)) canvasCtx.fillStyle = "Orange";
-        else canvasCtx.fillStyle = "lightblue";
+        else if (currentOpenQueue.some(n => n.id === nodeId)) canvasCtx.fillStyle = "orange";
+        else canvasCtx.fillStyle = "lightblue"; // Unvisited nodes
 
         canvasCtx.fill();
         canvasCtx.strokeStyle = "black";
         canvasCtx.stroke();
 
+        // Draw node ID
         canvasCtx.fillStyle = "black";
         canvasCtx.font = "16px Arial";
-        canvasCtx.fillText(nodeId, graphNodes[nodeId].x - 5, graphNodes[nodeId].y + 5);
+        canvasCtx.textAlign = "center"; // Center text horizontally
+        canvasCtx.textBaseline = "middle"; // Center text vertically
+        canvasCtx.fillText(nodeId, node.x, node.y); // Draw ID at the center
+
+        // Draw heuristic value (h)
+        let heuristicValue;
+        if (visitedTracker[nodeId]) {
+            heuristicValue = visitedTracker[nodeId].h;
+        } else {
+            heuristicValue = estimateHeuristic(nodeId, goalPoint);
+        }
+
+        canvasCtx.fillStyle = "blue"; // Color for heuristic value
+        canvasCtx.font = "10px Arial"; // Smaller font for heuristic
+        // Use the individual hXOffset and hYOffset for positioning
+        canvasCtx.fillText(`h:${heuristicValue}`, node.x + (node.hXOffset || 0), node.y + (node.hYOffset || 0));
     });
 
     // Draw final path if available
