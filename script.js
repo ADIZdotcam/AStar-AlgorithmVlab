@@ -620,18 +620,21 @@ function runAStarStep() {
 
     currentNarration = `${currentNode.id} (f=${currentNode.f}) Node choosed from the open set.<br><br>`;
 
-    // Check if goal is reached
-    if (currentNode.id === goalPoint) {
-        goalReached = true;
-        currentNarration += `Goal **${goalPoint}** reached! Calculating the shortest path.`;
-        updateTableDisplay();
-        const path = reconstructPath(currentNode.id);
-        renderGraph(openQueue, visitedQueue, path);
-        showQueueInfo();
-        updateNarationDisplay();
-        updateButtonStates();
-        return;
-    }
+// Store the state BEFORE checking goal
+stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
+
+// Check if goal is reached
+if (currentNode.id === goalPoint) {
+    goalReached = true;
+    currentNarration += `Goal **${goalPoint}** reached! Calculating the shortest path.`;
+    updateTableDisplay();
+    const path = reconstructPath(currentNode.id);
+    renderGraph(openQueue, visitedQueue, path);
+    showQueueInfo();
+    updateNarrationDisplay(); // <- also fix this typo here
+    updateButtonStates();
+    return;
+}
 
     currentNarration += `Exploring neighbors of ${currentNode.id}: `;
     let neighborsProcessed = [];
@@ -698,11 +701,11 @@ function reconstructPath(currentNodeId) {
     const path = [];
     let current = currentNodeId;
     while (current !== null && visitedTracker[current]) {
-        path.unshift(current);
+        path.push(current); // 👈 use push instead of unshift to make it from goal to start
         current = visitedTracker[current].from;
         if (current === "-") current = null;
     }
-    return path;
+    return path; // Now it's goal → start
 }
 
 nextButton2.addEventListener("click", () => {
