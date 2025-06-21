@@ -224,11 +224,17 @@ function getNeighbors(node) {
 }
 
 function aStarStep() {
-    if (pathFound || openSet.length === 0) {
-        if (!pathFound) {
+    if (pathFound) { // If path was already found in a previous step, just ensure "Retake Practical" is displayed.
+        document.getElementById("nextStep").innerText = "Retake Practical";
+        document.getElementById("retakeButton").style.display = "block";
+        return;
+    }
+
+    if (openSet.length === 0) {
+        if (!pathFound) { // Only display "Can't find path!" if no path was found after openSet is empty.
             document.getElementById("stepDetails").innerText = "Can't find path!";
             document.getElementById("nextStep").innerText = "Retake Practical";
-            document.getElementById("retakeButton").style.display = "block"; // Show Retake button
+            document.getElementById("retakeButton").style.display = "block";
         }
         return;
     }
@@ -237,12 +243,14 @@ function aStarStep() {
     openSet.sort((a, b) => a.f - b.f);
     let current = openSet.shift(); // Remove node with lowest f-cost
 
-    // If goal is reached, reconstruct the path
+    // If goal is reached, reconstruct the path and then prepare for retake
     if (current === goal) {
-        reconstructPath(current);
-        pathFound = true;
-        document.getElementById("nextStep").innerText = "Retake Practical";
-        return;
+        reconstructPathh(current); // Draw the path first
+        pathFound = true; // Set pathFound to true
+        document.getElementById("stepDetails").innerText = "Shortest path found!"; // Update the message
+        document.getElementById("nextStep").innerText = "Retake Practical"; // Change button text
+        document.getElementById("retakeButton").style.display = "block"; // Show Retake button
+        return; // Important: return here so no further A* step logic executes
     }
 
     // Move current node to closed set
@@ -258,7 +266,9 @@ function aStarStep() {
         if (closedSet.includes(neighbor) || neighbor.wall) continue; // Skip closed/wall nodes
 
         let tentativeG = current.g + 1; // Assuming uniform movement cost
-        if (!openSet.includes(neighbor)) {
+        let inOpenSet = openSet.includes(neighbor); // Check if neighbor is already in openSet
+
+        if (!inOpenSet) {
             openSet.push(neighbor); // Add to openSet if not already present
         } else if (tentativeG >= neighbor.g) {
             continue; // Skip if no improvement
@@ -284,27 +294,28 @@ function aStarStep() {
 
 
 // Reconstruct Path
-function reconstructPath(node) {
+function reconstructPathh(node) {
     path = [];
     while (node) {
-        path.push(node);
-        node = node.parent;
+        path.push(node); // Adds the current node (starting from the goal)
+        node = node.parent; // Moves to the parent (which is closer to the start)
     }
-    path.reverse();
+    // path.reverse(); // If this is commented out, 'path' will be [goal, ..., start]
     drawPath();
 }
-
 // Draw Path
 function drawPath() {
+    // Clear any lingering open/closed set classes from path nodes before drawing
+    // This helps ensure the path color is visible.
     for (let node of path) {
+        node.element.classList.remove("open-set", "closed-set");
         if (node !== start && node !== goal) {
             node.element.classList.add("path");
-            node.element.innerText = "✔";
+            node.element.innerText = "✔"; // Or some other clear indicator
         }
     }
     document.getElementById("stepDetails").innerText = "Shortest path found!";
 }
-
 // Start Search
 function startSearch() {
     openSet = [start];
@@ -399,6 +410,21 @@ function copyCode(elementId) {
         console.error("Failed to copy code: ", err);
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
