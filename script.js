@@ -452,12 +452,22 @@ const graphNodes = {
 };
 
 const graphEdges = [
+    // Original Edges
     ["A", "B", 4], ["A", "D", 2],
     ["B", "C", 3], ["B", "D", 5],
     ["C", "E", 7], ["C", "F", 6],
     ["D", "E", 3], ["D", "H", 8],
-    ["E", "G", 2], ["F", "G", 4],
-    ["H", "G", 5]
+    ["E", "G", 2],
+    ["F", "G", 4],
+    ["H", "G", 5],
+    // Reverse Edges
+    ["B", "A", 4], ["D", "A", 2],
+    ["C", "B", 3], ["D", "B", 5],
+    ["E", "C", 7], ["F", "C", 6],
+    ["E", "D", 3], ["H", "D", 8],
+    ["G", "E", 2],
+    ["G", "F", 4],
+    ["G", "H", 5]
 ];
 
 const startPoint = "A";
@@ -621,7 +631,7 @@ function runAStarStep() {
     currentNarration = `${currentNode.id} (f=${currentNode.f}) Node choosed from the open set.<br><br>`;
 
 // Store the state BEFORE checking goal
-stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
+//stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
 
 // Check if goal is reached
 if (currentNode.id === goalPoint) {
