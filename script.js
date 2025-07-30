@@ -70,7 +70,7 @@ const questions = [
         answer: 0
     },
     {
-        question: "Which data structure is commonly used to store nodes in A* search?",
+        question: "Which data structure is commonly used to efficiently store nodes in A* search?",
         choices: [
             "A. Queue",
             "B. Stack",
@@ -78,6 +78,67 @@ const questions = [
             "D. Linked List"
         ],
         answer: 2
+    },
+    // New Questions Start Here
+    {
+        question: "In A*, what does the formula f(n) = g(n) + h(n) calculate?",
+        choices: [
+            "A. The exact cost from the start node to node n.",
+            "B. The total estimated cost of the cheapest path from start to goal via node n.",
+            "C. The straight-line distance from node n to the goal.",
+            "D. The cost from the start node to the parent of node n."
+        ],
+        answer: 1
+    },
+    {
+        question: "What does the 'g(n)' value represent for a given node n?",
+        choices: [
+            "A. The estimated cost from node n to the goal.",
+            "B. The lowest cost of the path found so far from the start node to node n.",
+            "C. The number of neighbors node n has.",
+            "D. The total estimated cost of the path through n."
+        ],
+        answer: 1
+    },
+    {
+        question: "How does A* differ from Dijkstra's algorithm?",
+        choices: [
+            "A. Dijkstra's is only for unweighted graphs.",
+            "B. A* uses a heuristic (h) to guide its search, while Dijkstra does not.",
+            "C. A* is faster but does not guarantee the shortest path.",
+            "D. Dijkstra's algorithm is not used for pathfinding."
+        ],
+        answer: 1
+    },
+    {
+        question: "What is the purpose of the 'Open Set' (or Open List) in A*?",
+        choices: [
+            "A. To store all nodes that have been visited and fully explored.",
+            "B. To store the final path once the goal is reached.",
+            "C. To store nodes that have been discovered but not yet fully explored.",
+            "D. To store all nodes that cannot be reached."
+        ],
+        answer: 2
+    },
+    {
+        question: "If you modify A* to only consider the heuristic value (i.e., f(n) = h(n)), it becomes which algorithm?",
+        choices: [
+            "A. Breadth-First Search",
+            "B. Depth-First Search",
+            "C. Dijkstra's Algorithm",
+            "D. Greedy Best-First Search"
+        ],
+        answer: 3
+    },
+    {
+        question: "What is the primary reason for using a 'Closed Set' (or Closed List) in A*?",
+        choices: [
+            "A. To prevent the algorithm from getting stuck in loops by not re-processing nodes.",
+            "B. To store nodes that have a very high heuristic value.",
+            "C. To act as a backup for the Open Set.",
+            "D. To store only the starting and goal nodes."
+        ],
+        answer: 0
     }
 ];
 
