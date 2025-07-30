@@ -642,18 +642,16 @@ function runAStarStep() {
 
     currentNarration = `${currentNode.id} (f=${currentNode.f}) Node choosed from the open set.<br><br>`;
 
-// Store the state BEFORE checking goal
-//stepHistory.push(JSON.parse(JSON.stringify({ openQueue, visitedQueue, visitedTracker, narration: currentNarration })));
 
 // Check if goal is reached
 if (currentNode.id === goalPoint) {
     goalReached = true;
-    currentNarration += `Goal **${goalPoint}** reached! Calculating the shortest path.`;
+    currentNarration += `<span style="color: red;">Goal ${goalPoint} reached! Calculating the shortest path.`;
     updateTableDisplay();
     const path = reconstructPath(currentNode.id);
     renderGraph(openQueue, visitedQueue, path);
     showQueueInfo();
-    updateNarrationDisplay(); // <- also fix this typo here
+    updateNarrationDisplay();
     updateButtonStates();
     return;
 }
@@ -681,7 +679,7 @@ if (currentNode.id === goalPoint) {
             // Node not in open set, add it
             openQueue.push({ id: dst, g: tentative_gScore, h: hScore, f: tentative_fScore, from: currentNode.id });
             visitedTracker[dst] = { g: tentative_gScore, h: hScore, f: tentative_fScore, from: currentNode.id };
-            neighborsProcessed.push(`Added **${dst}** (g=${tentative_gScore}, h=${hScore}, f=${tentative_fScore}) to open set.`);
+            neighborsProcessed.push(`Added <span style="color: red;">${dst}\ (g=${tentative_gScore}, h=${hScore}, f=${tentative_fScore})</span> to open set.`);
         } else if (tentative_gScore < existingNodeInOpen.g) {
             // Node in open set, but new path is better (lower g-score)
             existingNodeInOpen.g = tentative_gScore;
