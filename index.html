@@ -505,7 +505,7 @@ if __name__=='__main__':
         
         <div class="step">
             <h3>Iteration 1: Expand A</h3>
-            <p>Neighbors of A: <span style="color: red;">B, C</span></p>
+            <p>Neighbours of A: <span style="color: red;">B, C</span></p>
             <ul>
                 <li>For B: g(B) = 10, h(B) = 4, f(B) = 14</li>
                 <li>For C: g(C) = 5, h(C) = 2, f(C) = 7</li>
@@ -522,7 +522,7 @@ if __name__=='__main__':
         
         <div class="step">
             <h3>Iteration 2: Expand C</h3>
-            <p>Neighbors of C: <span style="color: red;">D, B</span></p>  <ul>
+            <p>Neighbours of C: <span style="color: red;">D, B</span></p>  <ul>
                 <li>For D: g(D) = g(C) + cost(C, D) = 5 + 15 = 20; h(D) = 0; f(D) = 20</li>
                 <li>For B: g(B) = g(C) + cost(C, B) = 5 + 6 = 11; h(B) = 4; f(B) = 15  <p><strong><br> Check if this is shorter than the current g(B):</br></strong></p>
                     <p>Current g(B) = 10 (from A to B directly)</p>
@@ -542,7 +542,7 @@ if __name__=='__main__':
         
         <div class="step">
             <h3>Iteration 3: Expand B</h3>
-            <p>Neighbors of B: <span style="color: red;">D</span></p>
+            <p>Neighbours of B: <span style="color: red;">D</span></p>
             <ul>
                 <li>For D: g(D) = 14, h(D) = 0, f(D) = 14</li>
             </ul>
