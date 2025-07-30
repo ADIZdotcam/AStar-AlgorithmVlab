@@ -772,7 +772,7 @@ function showQueueInfo() {
     const openText = sortedOpen.map(n => `(${n.id}, f:${n.f})`).join(", ");
     const closedText = visitedQueue.join(", ");
 
-    statusDiv.innerHTML = `Iteration ${iteration}: Open Set = {${openText}}; Closed Set = {${closedText}}`;
+    statusDiv.innerHTML = `Iteration ${iteration}: OPEN SET = {${openText}}; CLOSED SET = {${closedText}}`;
 
 }
 
