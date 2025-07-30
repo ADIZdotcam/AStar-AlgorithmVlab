@@ -430,7 +430,7 @@ function copyCode(elementId) {
 
 const canvasElem = document.getElementById("graphCanvas");
 const canvasCtx = canvasElem.getContext("2d");
-canvasElem.width = 295;
+canvasElem.width = 300;
 canvasElem.height = 290;
 
 const tableBody = document.getElementById("info-table").querySelector("tbody");
@@ -447,7 +447,7 @@ const graphNodes = {
     D: { x: 100, y: 135, hXOffset: -5, hYOffset:  - 30  },
     E: { x: 205, y: 170, hXOffset: -5, hYOffset: - 30 },
     F: { x: 275, y: 135, hXOffset: 0, hYOffset:  - 30  },
-    G: { x: 275, y: 240, hXOffset: 0, hYOffset:   30  },
+    G: { x: 265, y: 250, hXOffset: 0, hYOffset:   30  },
     H: { x: 135, y: 240, hXOffset: 5, hYOffset:  - 30  }
 };
 
@@ -667,7 +667,7 @@ if (currentNode.id === goalPoint) {
 
         // Skip if neighbor is already in the closed set
         if (visitedQueue.includes(dst)) {
-            neighborsProcessed.push(`**${dst}** (already in closed set)`);
+            //neighborsProcessed.push(`**${dst}** (already in closed set)`);
             return;
         }
 
@@ -692,7 +692,7 @@ if (currentNode.id === goalPoint) {
             // Re-sort openQueue because f-score changed for an existing element
             openQueue.sort((a, b) => a.f - b.f);
         } else {
-            neighborsProcessed.push(`**${dst}** (existing path is better or equal).`);
+            //neighborsProcessed.push(`**${dst}** (existing path is better or equal).`);
         }
     });
     currentNarration += neighborsProcessed.join('; ');
