@@ -525,32 +525,44 @@ function initializeAStar() {
 function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
     canvasCtx.clearRect(0, 0, canvasElem.width, canvasElem.height);
 
+    // Use a Set to track drawn edges to avoid drawing weights twice
+    const drawnEdges = new Set();
+
     // Draw edges
     graphEdges.forEach(([src, dst, cost]) => {
-        const { x: sx, y: sy } = graphNodes[src];
-        const { x: dx, y: dy } = graphNodes[dst];
+        // Create a unique key for the edge pair by sorting the node IDs.
+        // This ensures that both ["A", "B"] and ["B", "A"] produce the same key: "A-B".
+        const edgeKey = [src, dst].sort().join('-');
 
-        canvasCtx.beginPath();
-        canvasCtx.moveTo(sx, sy);
-        canvasCtx.lineTo(dx, dy);
-        canvasCtx.strokeStyle = "black";
-        canvasCtx.lineWidth = 2;
-        canvasCtx.stroke();
+        // Only draw the edge and its weight if we haven't already drawn it.
+        if (!drawnEdges.has(edgeKey)) {
+            const { x: sx, y: sy } = graphNodes[src];
+            const { x: dx, y: dy } = graphNodes[dst];
 
-        const midX = (sx + dx) / 2;
-        const midY = (sy + dy) / 2;
+            canvasCtx.beginPath();
+            canvasCtx.moveTo(sx, sy);
+            canvasCtx.lineTo(dx, dy);
+            canvasCtx.strokeStyle = "black";
+            canvasCtx.lineWidth = 2;
+            canvasCtx.stroke();
 
-        const angle = Math.atan2(dy - sy, dx - sx);
-        const labelOffset = 15;
+            // Calculate position and draw the weight label
+            const midX = (sx + dx) / 2;
+            const midY = (sy + dy) / 2;
+            const angle = Math.atan2(dy - sy, dx - sx);
+            const labelOffset = 15;
+            const textX = midX + labelOffset * Math.cos(angle + Math.PI / 2);
+            const textY = midY + labelOffset * Math.sin(angle + Math.PI / 2);
 
-        const textX = midX + labelOffset * Math.cos(angle + Math.PI / 2);
-        const textY = midY + labelOffset * Math.sin(angle + Math.PI / 2);
+            canvasCtx.fillStyle = "red";
+            canvasCtx.font = "12px Arial";
+            canvasCtx.textAlign = "center";
+            canvasCtx.textBaseline = "middle";
+            canvasCtx.fillText(cost, textX, textY);
 
-        canvasCtx.fillStyle = "red";
-        canvasCtx.font = "12px Arial";
-        canvasCtx.textAlign = "center"; // Ensure text alignment is set
-        canvasCtx.textBaseline = "middle";
-        canvasCtx.fillText(cost, textX, textY);
+            // Add the key to the set to mark this edge as drawn.
+            drawnEdges.add(edgeKey);
+        }
     });
 
     // Draw nodes
@@ -573,8 +585,8 @@ function renderGraph(currentOpenQueue, currentVisitedQueue, finalPath = null) {
         // Draw node ID
         canvasCtx.fillStyle = "black";
         canvasCtx.font = "16px Arial";
-        canvasCtx.textAlign = "center"; // Center text horizontally
-        canvasCtx.textBaseline = "middle"; // Center text vertically
+        canvasCtx.textAlign = "center";
+        canvasCtx.textBaseline = "middle";
         canvasCtx.fillText(nodeId, node.x, node.y); // Draw ID at the center
 
         // Draw heuristic value (h)
