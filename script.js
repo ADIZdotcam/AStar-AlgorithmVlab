@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
     createGrid();
 });
 
+//practice section
 const rows = 7 ;
 const cols = 7;
 let grid = [];
