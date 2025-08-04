@@ -560,8 +560,16 @@ if __name__=='__main__':
         <div class="step">
             <h3>Iteration 4: Expand D</h3>
             <p><strong>D is the goal. We're done!</strong></p>
+            <p>Now that we've reached the goal, we need to reconstruct the path. We do this by backtracking from the goal node (D) using the "Came From" column in our table until we reach the start node (A).</p>
             <div class="optimal">
-                <p>Optimal Path: <strong>A → B → D</strong></p>
+                <p>Optimal Path: <strong>A ← B ← D</strong></p>
+                <p>The path is traced as follows:</p>
+                <ol>
+                    <li>Start at the goal: <strong>D</strong>. The table shows it "Came From" <strong>B</strong>.</li>
+                    <li>Move to <strong>B</strong>. The table shows it "Came From" <strong>A</strong>.</li>
+                    <li>Move to <strong>A</strong>. This is the start node, so we stop.</li>
+                </ol>
+                <p>Reading the path from start to finish, the optimal path is <strong>A → B → D</strong>.</p>
                 <p>Optimal Cost: <strong>14</strong></p>
             </div>
         </div>
